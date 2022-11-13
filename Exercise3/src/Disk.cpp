@@ -11,9 +11,16 @@ Disk::Disk(float x, float y, float vx, float vy, float radius, float mass)
     color = ofColor(ofRandom(0, 255), ofRandom(0, 255), ofRandom(0, 255));
 }
 
-void Disk::update()
+void Disk::update(float dt)
 {
-    _color = ofColor(ofRandom(0, 255), ofRandom(0, 255), ofRandom(0, 255));
+    x += vx * dt;
+    y += vy * dt;
+
+    if (x - radius < 0 || x + radius > ofGetWidth())
+        vx *= -1;
+
+    if (y - radius < 0 || y + radius > ofGetHeight())
+        vy *= -1;
 }
 
 void Disk::draw()

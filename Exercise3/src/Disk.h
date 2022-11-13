@@ -8,7 +8,7 @@ public:
     Disk();
     Disk(float x, float y, float vx, float vy, float radius, float mass);
 
-    void update();
+    void update(float dt);
     void draw();
 
 private:

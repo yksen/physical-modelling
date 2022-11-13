@@ -6,7 +6,7 @@
 class ofApp : public ofBaseApp
 {
 public:
-	ofApp(size_t diskCount);
+	ofApp(size_t diskCount, float dt);
 
 	void setup();
 	void update();
@@ -25,6 +25,8 @@ public:
 	void gotMessage(ofMessage msg);
 
 private:
+	float dt;
+
 	size_t diskCount;
 	std::vector<Disk> disks;
 

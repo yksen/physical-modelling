@@ -1,7 +1,7 @@
 #include "ofApp.h"
 
-ofApp::ofApp(size_t diskCount)
-    : diskCount(diskCount)
+ofApp::ofApp(size_t diskCount, float dt)
+    : diskCount(diskCount), dt(dt)
 {
 }
 
@@ -28,7 +28,7 @@ void ofApp::update()
 {
     for (auto &disk : disks)
     {
-        disk.update();
+        disk.update(dt);
     }
 }
 
