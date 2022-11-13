@@ -1,29 +1,40 @@
 #include "ofApp.h"
 
+ofApp::ofApp(size_t diskCount)
+    : diskCount(diskCount)
+{
+}
+
 void ofApp::setup()
 {
     ofSetBackgroundColor(0);
     ofSetCircleResolution(100);
     ofSetFrameRate(144);
 
-    for (size_t i = 0; i < _diskCount; ++i)
+    for (size_t i = 0; i < diskCount; ++i)
     {
-        _disks.push_back(
+        disks.push_back(
             Disk(
-                ofRandom(_maxDiskRadius, ofGetWidth() - _maxDiskRadius),
-                ofRandom(_maxDiskRadius, ofGetHeight() - _maxDiskRadius),
-                ofRandom(_minDiskRadius, _maxDiskRadius),
+                ofRandom(maxDiskRadius, ofGetWidth() - maxDiskRadius),
+                ofRandom(maxDiskRadius, ofGetHeight() - maxDiskRadius),
+                ofRandom(-1, 1),
+                ofRandom(-1, 1),
+                ofRandom(minDiskRadius, maxDiskRadius),
                 ofRandom(1, 10)));
     }
 }
 
 void ofApp::update()
 {
+    for (auto &disk : disks)
+    {
+        disk.update();
+    }
 }
 
 void ofApp::draw()
 {
-    for (auto &disk : _disks)
+    for (auto &disk : disks)
     {
         disk.draw();
     }

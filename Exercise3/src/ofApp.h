@@ -6,6 +6,8 @@
 class ofApp : public ofBaseApp
 {
 public:
+	ofApp(size_t diskCount);
+
 	void setup();
 	void update();
 	void draw();
@@ -23,9 +25,9 @@ public:
 	void gotMessage(ofMessage msg);
 
 private:
-	size_t _diskCount = 10;
-	std::vector<Disk> _disks;
+	size_t diskCount;
+	std::vector<Disk> disks;
 
-	float _minDiskRadius = 10;
-	float _maxDiskRadius = 50;
+	float minDiskRadius = 10;
+	float maxDiskRadius = 50;
 };
