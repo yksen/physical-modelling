@@ -11,16 +11,17 @@ void ofApp::setup()
     ofSetCircleResolution(100);
     ofSetFrameRate(144);
 
+    center = ofVec2f(ofGetWidth() / 2, ofGetHeight() / 2);
+
     for (size_t i = 0; i < diskCount; ++i)
     {
+        float radius = ofRandom(minDiskRadius, maxDiskRadius);
         disks.push_back(
             Disk(
-                ofRandom(maxDiskRadius, ofGetWidth() - maxDiskRadius),
-                ofRandom(maxDiskRadius, ofGetHeight() - maxDiskRadius),
-                ofRandom(-1, 1),
-                ofRandom(-1, 1),
-                ofRandom(minDiskRadius, maxDiskRadius),
-                ofRandom(1, 10)));
+                ofVec2f(ofRandom(maxDiskRadius, ofGetWidth() - maxDiskRadius), ofRandom(maxDiskRadius, ofGetHeight() - maxDiskRadius)),
+                ofVec2f(ofRandom(-1, 1), ofRandom(-1, 1)),
+                radius,
+                radius * radius));
     }
 }
 
@@ -28,7 +29,7 @@ void ofApp::update()
 {
     for (auto &disk : disks)
     {
-        disk.update(dt);
+        disk.update(dt, center);
     }
 }
 
@@ -74,6 +75,7 @@ void ofApp::mouseExited(int x, int y)
 
 void ofApp::windowResized(int w, int h)
 {
+    center = ofVec2f(ofGetWidth() / 2, ofGetHeight() / 2);
 }
 
 void ofApp::gotMessage(ofMessage msg)

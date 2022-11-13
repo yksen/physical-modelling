@@ -26,6 +26,7 @@ public:
 
 private:
 	float dt;
+	ofVec2f center;
 
 	size_t diskCount;
 	std::vector<Disk> disks;

@@ -6,16 +6,18 @@ class Disk
 {
 public:
     Disk();
-    Disk(float x, float y, float vx, float vy, float radius, float mass);
+    Disk(ofVec2f position, ofVec2f velocity, float radius, float mass);
 
-    void update(float dt);
+    void update(float dt, ofVec2f center);
     void draw();
 
+    void processAcceleration(float dt, ofVec2f center);
+    void processVelocity(float dt);
+    void checkBorderCollision();
+
 private:
-    float x;
-    float y;
-    float vx;
-    float vy;
+    ofVec2f position;
+    ofVec2f velocity;
     float radius;
     float mass;
     ofColor color;
