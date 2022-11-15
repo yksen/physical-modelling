@@ -65,6 +65,11 @@ void ofApp::mouseReleased(int x, int y, int button)
 {
 }
 
+void ofApp::mouseScrolled(int x, int y, float scrollX, float scrollY)
+{
+    dt += scrollY * 0.5f;
+}
+
 void ofApp::mouseEntered(int x, int y)
 {
 }
