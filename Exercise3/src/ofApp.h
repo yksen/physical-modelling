@@ -6,7 +6,7 @@
 class ofApp : public ofBaseApp
 {
 public:
-	ofApp(size_t diskCount, float dt);
+	ofApp();
 
 	void setup();
 	void update();
@@ -26,13 +26,11 @@ public:
 	void gotMessage(ofMessage msg);
 
 private:
-	float dt;
-	ofVec2f center;
+	float dt = 1.f;
+	float attractorRadius = 15.f;
+	float minDiskRadius = 10.f;
+	float maxDiskRadius = 30.f;
 
-	size_t diskCount;
 	std::vector<Disk> disks;
 	std::vector<Attractor> attractors;
-
-	float minDiskRadius = 5;
-	float maxDiskRadius = 25;
 };

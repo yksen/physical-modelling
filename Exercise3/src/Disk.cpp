@@ -3,7 +3,7 @@
 void Attractor::draw()
 {
     ofSetColor(ofColor::yellow);
-    ofDrawCircle(position, mass);
+    ofDrawCircle(position, radius);
 }
 
 Disk::Disk()
@@ -31,11 +31,11 @@ void Disk::processAcceleration(float dt)
     {
         ofVec2f direction = attractors->at(i).position - position;
         float distance = direction.length();
+        if (distance < MIN_ATTRACTION_DISTANCE)
+            continue;
         float force = (attractors->at(i).mass * mass) / (distance * distance);
         acceleration += direction.normalize() * force;
     }
-    if ((velocity + acceleration * dt).length() > MAX_VELOCITY)
-        return;
     velocity += acceleration * dt;
 }
 

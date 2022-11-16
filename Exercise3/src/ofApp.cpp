@@ -1,7 +1,6 @@
 #include "ofApp.h"
 
-ofApp::ofApp(size_t diskCount, float dt)
-    : diskCount(diskCount), dt(dt)
+ofApp::ofApp()
 {
 }
 
@@ -10,20 +9,6 @@ void ofApp::setup()
     ofSetBackgroundColor(0);
     ofSetCircleResolution(100);
     ofSetFrameRate(144);
-
-    center = ofVec2f(ofGetWidth() / 2, ofGetHeight() / 2);
-
-    for (size_t i = 0; i < diskCount; ++i)
-    {
-        float radius = ofRandom(minDiskRadius, maxDiskRadius);
-        disks.push_back(
-            Disk(
-                ofVec2f(ofRandom(maxDiskRadius, ofGetWidth() - maxDiskRadius), ofRandom(maxDiskRadius, ofGetHeight() - maxDiskRadius)),
-                ofVec2f(ofRandom(-1, 1), ofRandom(-1, 1)),
-                radius,
-                10,
-                &attractors));
-    }
 }
 
 void ofApp::update()
@@ -64,7 +49,25 @@ void ofApp::mouseDragged(int x, int y, int button)
 
 void ofApp::mousePressed(int x, int y, int button)
 {
-    attractors.push_back({ofVec2f(x, y), 20});
+    switch (button)
+    {
+    case ofKey::OF_MOUSE_BUTTON_LEFT:
+        [this, x, y]
+        {
+            float radius = ofRandom(minDiskRadius, maxDiskRadius);
+            disks.push_back(
+                Disk(
+                    ofVec2f(x, y),
+                    ofVec2f(0, 0),
+                    radius,
+                    radius,
+                    &attractors));
+        }();
+        break;
+    case ofKey::OF_MOUSE_BUTTON_RIGHT:
+        attractors.push_back({ofVec2f(x, y), attractorRadius, attractorRadius});
+        break;
+    }
 }
 
 void ofApp::mouseReleased(int x, int y, int button)
@@ -86,7 +89,6 @@ void ofApp::mouseExited(int x, int y)
 
 void ofApp::windowResized(int w, int h)
 {
-    center = ofVec2f(ofGetWidth() / 2, ofGetHeight() / 2);
 }
 
 void ofApp::gotMessage(ofMessage msg)

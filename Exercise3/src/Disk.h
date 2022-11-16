@@ -5,6 +5,7 @@
 struct Attractor
 {
     ofVec2f position;
+    float radius;
     float mass;
 
     void draw();
@@ -24,11 +25,12 @@ public:
     void checkBorderCollision();
 
 private:
+    const float MIN_ATTRACTION_DISTANCE = 10;
+
     ofVec2f position;
     ofVec2f velocity;
     float radius;
     float mass;
     ofColor color;
     std::vector<Attractor> *attractors;
-    const float MAX_VELOCITY = 10;
 };
