@@ -31,7 +31,8 @@ private:
 
 	size_t diskCount;
 	std::vector<Disk> disks;
+	std::vector<Attractor> attractors;
 
-	float minDiskRadius = 10;
-	float maxDiskRadius = 50;
+	float minDiskRadius = 5;
+	float maxDiskRadius = 25;
 };

@@ -21,7 +21,8 @@ void ofApp::setup()
                 ofVec2f(ofRandom(maxDiskRadius, ofGetWidth() - maxDiskRadius), ofRandom(maxDiskRadius, ofGetHeight() - maxDiskRadius)),
                 ofVec2f(ofRandom(-1, 1), ofRandom(-1, 1)),
                 radius,
-                radius * radius));
+                10,
+                &attractors));
     }
 }
 
@@ -29,7 +30,7 @@ void ofApp::update()
 {
     for (auto &disk : disks)
     {
-        disk.update(dt, center);
+        disk.update(dt);
     }
 }
 
@@ -38,6 +39,10 @@ void ofApp::draw()
     for (auto &disk : disks)
     {
         disk.draw();
+    }
+    for (auto &attractor : attractors)
+    {
+        attractor.draw();
     }
 }
 
@@ -59,6 +64,7 @@ void ofApp::mouseDragged(int x, int y, int button)
 
 void ofApp::mousePressed(int x, int y, int button)
 {
+    attractors.push_back({ofVec2f(x, y), 20});
 }
 
 void ofApp::mouseReleased(int x, int y, int button)
@@ -67,7 +73,7 @@ void ofApp::mouseReleased(int x, int y, int button)
 
 void ofApp::mouseScrolled(int x, int y, float scrollX, float scrollY)
 {
-    dt += scrollY * 0.5f;
+    dt += scrollY * 0.25f;
 }
 
 void ofApp::mouseEntered(int x, int y)
