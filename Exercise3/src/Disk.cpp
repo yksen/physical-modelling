@@ -33,7 +33,7 @@ void Disk::processAcceleration(float dt)
         float distance = direction.length();
         if (distance < MIN_ATTRACTION_DISTANCE)
             continue;
-        float force = (attractors->at(i).mass * mass) / (distance * distance);
+        float force = (attractors->at(i).mass) / (distance * distance);
         acceleration += direction.normalize() * force;
     }
     velocity += acceleration * dt;
