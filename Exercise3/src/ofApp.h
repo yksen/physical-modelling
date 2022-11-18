@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxGui.h"
 #include "Disk.h"
 
 class ofApp : public ofBaseApp
@@ -18,7 +19,6 @@ public:
 	void mouseDragged(int x, int y, int button);
 	void mousePressed(int x, int y, int button);
 	void mouseReleased(int x, int y, int button);
-	void mouseScrolled(int x, int y, float scrollX, float scrollY);
 	void windowResized(int w, int h);
 
 	void processMouseInput();
@@ -27,9 +27,9 @@ public:
 
 private:
 	bool isMouseButtonLeftPressed = false;
-	bool isMouseButtonRightPressed = false;
 
-	float dt = 1.f;
+	ofxPanel gui;
+	ofxFloatSlider dt;
 	float attractorRadius = 15.f;
 	float minDiskRadius = 10.f;
 	float maxDiskRadius = 30.f;
