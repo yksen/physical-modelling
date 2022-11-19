@@ -30,7 +30,7 @@ private:
 
 	ofxPanel gui;
 	ofxFloatSlider dt;
-	float attractorRadius = 15.f;
+	ofxFloatSlider attractorRadius;
 	float minDiskRadius = 10.f;
 	float maxDiskRadius = 30.f;
 

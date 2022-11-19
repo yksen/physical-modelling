@@ -12,6 +12,7 @@ void ofApp::setup()
 
     gui.setup();
     gui.add(dt.setup("dt", 1.f, -10.f, 10.f));
+    gui.add(attractorRadius.setup("attractor radius", 15.f, 1.f, 100.f));
 }
 
 void ofApp::update()
@@ -28,7 +29,7 @@ void ofApp::draw()
         disk.draw();
     for (auto &attractor : attractors)
         attractor.draw();
-        
+
     gui.draw();
 }
 
