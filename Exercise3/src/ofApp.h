@@ -24,11 +24,16 @@ public:
 	void processMouseInput();
 	void spawnAttractor(int x, int y);
 	void spawnDisk(int x, int y);
+	void clearAttractorsPressed();
+	void clearDisksPressed();
 
 private:
 	bool isMouseButtonLeftPressed = false;
+	bool isGuiVisible = true;
 
 	ofxPanel gui;
+	ofxButton clearAttractors;
+	ofxButton clearDisks;
 	ofxFloatSlider dt;
 	ofxFloatSlider attractorRadius;
 	float minDiskRadius = 10.f;

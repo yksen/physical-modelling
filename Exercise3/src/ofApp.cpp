@@ -10,7 +10,12 @@ void ofApp::setup()
     ofSetCircleResolution(100);
     ofSetFrameRate(144);
 
+    clearAttractors.addListener(this, &ofApp::clearAttractorsPressed);
+    clearDisks.addListener(this, &ofApp::clearDisksPressed);
+
     gui.setup();
+    gui.add(clearAttractors.setup("Clear Attractors"));
+    gui.add(clearDisks.setup("Clear Disks"));
     gui.add(dt.setup("dt", 1.f, -10.f, 10.f));
     gui.add(attractorRadius.setup("attractor radius", 15.f, 1.f, 100.f));
 }
@@ -30,11 +35,14 @@ void ofApp::draw()
     for (auto &attractor : attractors)
         attractor.draw();
 
-    gui.draw();
+    if (isGuiVisible)
+        gui.draw();
 }
 
 void ofApp::keyPressed(int key)
 {
+    if (key == 'h')
+        isGuiVisible = !isGuiVisible;
 }
 
 void ofApp::keyReleased(int key)
@@ -88,4 +96,14 @@ void ofApp::spawnDisk(int x, int y)
             radius,
             radius,
             &attractors));
+}
+
+void ofApp::clearAttractorsPressed()
+{
+    attractors.clear();
+}
+
+void ofApp::clearDisksPressed()
+{
+    disks.clear();
 }
