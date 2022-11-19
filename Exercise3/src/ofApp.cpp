@@ -14,11 +14,14 @@ void ofApp::setup()
     clearDisks.addListener(this, &ofApp::clearDisksPressed);
 
     gui.setup();
+    gui.add(areAttractorsVisible.setup("Show Attractors", true));
+    gui.add(isViscosityVisible.setup("Show viscosity", true));
     gui.add(clearAttractors.setup("Clear Attractors"));
     gui.add(clearDisks.setup("Clear Disks"));
     gui.add(dt.setup("dt", 1.f, -10.f, 10.f));
     gui.add(attractorRadius.setup("attractor radius", 15.f, 1.f, 100.f));
-    gui.add(viscosity.setup("viscosity", 0.0005f, 0.f, 0.001f));
+
+    generateViscosity(ofGetWidth(), ofGetHeight());
 }
 
 void ofApp::update()
@@ -31,10 +34,17 @@ void ofApp::update()
 
 void ofApp::draw()
 {
+    if (isViscosityVisible)
+    {
+        ofSetColor(255);
+        viscosityImage.draw(0.f, 0.f);
+    }
+
     for (auto &disk : disks)
         disk.draw();
-    for (auto &attractor : attractors)
-        attractor.draw();
+    if (areAttractorsVisible)
+        for (auto &attractor : attractors)
+            attractor.draw();
 
     if (isGuiVisible)
         gui.draw();
@@ -58,6 +68,11 @@ void ofApp::mouseReleased(int x, int y, int button)
 {
     if (button == OF_MOUSE_BUTTON_LEFT)
         isMouseButtonLeftPressed = false;
+}
+
+void ofApp::windowResized(int w, int h)
+{
+    generateViscosity(w, h);
 }
 
 void ofApp::processMouseInput()
@@ -92,4 +107,19 @@ void ofApp::clearAttractorsPressed()
 void ofApp::clearDisksPressed()
 {
     disks.clear();
+}
+
+void ofApp::generateViscosity(int width, int height)
+{
+    viscosity.resize(width);
+    viscosity.assign(width, std::vector<float>(height));
+    viscosityImage.allocate(width, height, OF_IMAGE_COLOR);
+    for (size_t x = 0; x < viscosity.size(); ++x)
+        for (size_t y = 0; y < viscosity[x].size(); ++y)
+        {
+            float noiseValue = ofNoise(x / 100, y / 100);
+            viscosity[x][y] = ofMap(noiseValue, 0.f, 1.f, 0.f, 0.0001f);
+            viscosityImage.setColor(x, y, ofColor(noiseValue * 255, noiseValue * 255, noiseValue * 255));
+        }
+    viscosityImage.update();
 }

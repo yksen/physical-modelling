@@ -16,7 +16,7 @@ class Disk
 {
 public:
     Disk();
-    Disk(ofVec2f position, ofVec2f velocity, float radius, float mass, std::vector<Attractor> *attractors, ofxFloatSlider *viscosity);
+    Disk(ofVec2f position, ofVec2f velocity, float radius, float mass, std::vector<Attractor> *attractors, std::vector<std::vector<float>> *viscosity);
 
     void update(float dt);
     void draw();
@@ -36,5 +36,5 @@ private:
     float mass;
     ofColor color;
     std::vector<Attractor> *attractors;
-    ofxFloatSlider *viscosity;
+    std::vector<std::vector<float>> *viscosity;
 };

@@ -11,7 +11,7 @@ Disk::Disk()
 {
 }
 
-Disk::Disk(ofVec2f position, ofVec2f velocity, float radius, float mass, std::vector<Attractor> *attractors, ofxFloatSlider *viscosity)
+Disk::Disk(ofVec2f position, ofVec2f velocity, float radius, float mass, std::vector<Attractor> *attractors, std::vector<std::vector<float>> *viscosity)
     : position(position), velocity(velocity), radius(radius), mass(mass), attractors(attractors), viscosity(viscosity)
 {
     color = ofColor(ofRandom(0, 255), ofRandom(0, 255), ofRandom(0, 255));
@@ -19,9 +19,9 @@ Disk::Disk(ofVec2f position, ofVec2f velocity, float radius, float mass, std::ve
 
 void Disk::update(float dt)
 {
+    checkBorderCollision();
     processAcceleration(dt);
     processVelocity(dt);
-    checkBorderCollision();
 }
 
 void Disk::draw()
@@ -61,7 +61,7 @@ ofVec2f Disk::calculateGravitation()
 ofVec2f Disk::calculateDrag()
 {
     ofVec2f acceleration = {0, 0};
-    ofVec2f drag = -6 * PI * velocity * radius * (*viscosity);
+    ofVec2f drag = -6 * PI * velocity * radius * viscosity->at(position.x).at(position.y);
     acceleration += drag / mass;
     return acceleration;
 }
