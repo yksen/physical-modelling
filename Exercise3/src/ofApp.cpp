@@ -18,6 +18,7 @@ void ofApp::setup()
     gui.add(clearDisks.setup("Clear Disks"));
     gui.add(dt.setup("dt", 1.f, -10.f, 10.f));
     gui.add(attractorRadius.setup("attractor radius", 15.f, 1.f, 100.f));
+    gui.add(viscosity.setup("viscosity", 0.0005f, 0.f, 0.001f));
 }
 
 void ofApp::update()
@@ -45,18 +46,6 @@ void ofApp::keyPressed(int key)
         isGuiVisible = !isGuiVisible;
 }
 
-void ofApp::keyReleased(int key)
-{
-}
-
-void ofApp::mouseMoved(int x, int y)
-{
-}
-
-void ofApp::mouseDragged(int x, int y, int button)
-{
-}
-
 void ofApp::mousePressed(int x, int y, int button)
 {
     if (button == OF_MOUSE_BUTTON_LEFT)
@@ -69,10 +58,6 @@ void ofApp::mouseReleased(int x, int y, int button)
 {
     if (button == OF_MOUSE_BUTTON_LEFT)
         isMouseButtonLeftPressed = false;
-}
-
-void ofApp::windowResized(int w, int h)
-{
 }
 
 void ofApp::processMouseInput()
@@ -95,7 +80,8 @@ void ofApp::spawnDisk(int x, int y)
             ofVec2f(0, 0),
             radius,
             radius,
-            &attractors));
+            &attractors,
+            &viscosity));
 }
 
 void ofApp::clearAttractorsPressed()

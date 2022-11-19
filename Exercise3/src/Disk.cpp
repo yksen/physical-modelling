@@ -7,12 +7,12 @@ void Attractor::draw()
 }
 
 Disk::Disk()
-    : Disk(ofVec2f(0, 0), ofVec2f(0, 0), 0, 0, nullptr)
+    : Disk(ofVec2f(0, 0), ofVec2f(0, 0), 0, 0, nullptr, nullptr)
 {
 }
 
-Disk::Disk(ofVec2f position, ofVec2f velocity, float radius, float mass, std::vector<Attractor> *attractors)
-    : position(position), velocity(velocity), radius(radius), mass(mass), attractors(attractors)
+Disk::Disk(ofVec2f position, ofVec2f velocity, float radius, float mass, std::vector<Attractor> *attractors, ofxFloatSlider *viscosity)
+    : position(position), velocity(velocity), radius(radius), mass(mass), attractors(attractors), viscosity(viscosity)
 {
     color = ofColor(ofRandom(0, 255), ofRandom(0, 255), ofRandom(0, 255));
 }
@@ -24,7 +24,26 @@ void Disk::update(float dt)
     checkBorderCollision();
 }
 
+void Disk::draw()
+{
+    ofSetColor(color);
+    ofDrawCircle(position.x, position.y, radius);
+}
+
+void Disk::processVelocity(float dt)
+{
+    position += velocity * dt;
+}
+
 void Disk::processAcceleration(float dt)
+{
+    ofVec2f acceleration = {0, 0};
+    acceleration += calculateGravitation();
+    acceleration += calculateDrag();
+    velocity += acceleration * dt;
+}
+
+ofVec2f Disk::calculateGravitation()
 {
     ofVec2f acceleration = {0, 0};
     for (size_t i = 0; i < attractors->size(); ++i)
@@ -36,12 +55,15 @@ void Disk::processAcceleration(float dt)
         float force = (attractors->at(i).mass) / (distance * distance);
         acceleration += direction.normalize() * force;
     }
-    velocity += acceleration * dt;
+    return acceleration;
 }
 
-void Disk::processVelocity(float dt)
+ofVec2f Disk::calculateDrag()
 {
-    position += velocity * dt;
+    ofVec2f acceleration = {0, 0};
+    ofVec2f drag = -6 * PI * velocity * radius * (*viscosity);
+    acceleration += drag / mass;
+    return acceleration;
 }
 
 void Disk::checkBorderCollision()
@@ -57,10 +79,4 @@ void Disk::checkBorderCollision()
         velocity.y *= -1;
         position.y = ofClamp(position.y, radius, ofGetHeight() - radius);
     }
-}
-
-void Disk::draw()
-{
-    ofSetColor(color);
-    ofDrawCircle(position.x, position.y, radius);
 }

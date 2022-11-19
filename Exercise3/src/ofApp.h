@@ -14,12 +14,8 @@ public:
 	void draw();
 
 	void keyPressed(int key);
-	void keyReleased(int key);
-	void mouseMoved(int x, int y);
-	void mouseDragged(int x, int y, int button);
 	void mousePressed(int x, int y, int button);
 	void mouseReleased(int x, int y, int button);
-	void windowResized(int w, int h);
 
 	void processMouseInput();
 	void spawnAttractor(int x, int y);
@@ -38,6 +34,7 @@ private:
 	ofxFloatSlider attractorRadius;
 	float minDiskRadius = 10.f;
 	float maxDiskRadius = 30.f;
+	ofxFloatSlider viscosity;
 
 	std::vector<Disk> disks;
 	std::vector<Attractor> attractors;

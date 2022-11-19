@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxGui.h"
 
 struct Attractor
 {
@@ -15,13 +16,15 @@ class Disk
 {
 public:
     Disk();
-    Disk(ofVec2f position, ofVec2f velocity, float radius, float mass, std::vector<Attractor> *attractors);
+    Disk(ofVec2f position, ofVec2f velocity, float radius, float mass, std::vector<Attractor> *attractors, ofxFloatSlider *viscosity);
 
     void update(float dt);
     void draw();
 
-    void processAcceleration(float dt);
     void processVelocity(float dt);
+    void processAcceleration(float dt);
+    ofVec2f calculateGravitation();
+    ofVec2f calculateDrag();
     void checkBorderCollision();
 
 private:
@@ -33,4 +36,5 @@ private:
     float mass;
     ofColor color;
     std::vector<Attractor> *attractors;
+    ofxFloatSlider *viscosity;
 };
