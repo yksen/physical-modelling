@@ -18,6 +18,7 @@ public:
     void applyVelocity();
 
     static float dt;
+    static bool disksAttractionEnabled;
     static std::vector<unique_ptr<Object>> *attractors;
     static std::vector<unique_ptr<Object>> *disks;
     static std::vector<std::vector<float>> *viscosity;

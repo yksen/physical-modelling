@@ -2,6 +2,9 @@
 
 void Disk::update()
 {
+    if (disksAttractionEnabled)
+        for (auto &disk : *disks)
+            attract(disk.get());
     checkBorderCollision();
     applyDrag();
     applyVelocity();

@@ -3,6 +3,7 @@
 const float Object::MIN_ATTRACTION_DISTANCE = 10;
 
 float Object::dt = 0;
+bool Object::disksAttractionEnabled = false;
 std::vector<unique_ptr<Object>> *Object::attractors = nullptr;
 std::vector<unique_ptr<Object>> *Object::disks = nullptr;
 std::vector<std::vector<float>> *Object::viscosity = nullptr;

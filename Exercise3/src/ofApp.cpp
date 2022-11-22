@@ -16,12 +16,13 @@ void ofApp::setup()
 
     clearAttractors.addListener(this, &ofApp::clearAttractorsPressed);
     clearDisks.addListener(this, &ofApp::clearDisksPressed);
+    disksAttractionEnabled.addListener(this, &ofApp::updateDisksAttraction);
     dt.addListener(this, &ofApp::updateDt);
 
     gui.setup();
     gui.add(areAttractorsVisible.setup("Show attractors", true));
     gui.add(isViscosityVisible.setup("Show viscosity", true));
-    gui.add(areDisksAttracting.setup("Interdisk attraction", false));
+    gui.add(disksAttractionEnabled.setup("Disks attraction", false));
     gui.add(clearAttractors.setup("Clear attractors"));
     gui.add(clearDisks.setup("Clear disks"));
     gui.add(dt.setup("dt", 1.f, -10.f, 10.f));
@@ -86,6 +87,11 @@ void ofApp::windowResized(int w, int h)
 void ofApp::updateDt(float &dt)
 {
     Object::dt = dt;
+}
+
+void ofApp::updateDisksAttraction(bool &disksAttractionEnabled)
+{
+    Object::disksAttractionEnabled = disksAttractionEnabled;
 }
 
 void ofApp::processMouseInput()

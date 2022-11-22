@@ -18,6 +18,7 @@ public:
 	void windowResized(int w, int h);
 
 	void updateDt(float &dt);
+	void updateDisksAttraction(bool &disksAttractionEnabled);
 	void processMouseInput();
 	void spawnAttractor(int x, int y);
 	void spawnDisk(int x, int y);
@@ -32,7 +33,7 @@ private:
 	ofxPanel gui;
 	ofxToggle areAttractorsVisible;
 	ofxToggle isViscosityVisible;
-	ofxToggle areDisksAttracting;
+	ofxToggle disksAttractionEnabled;
 	ofxButton clearAttractors;
 	ofxButton clearDisks;
 	ofxFloatSlider dt;

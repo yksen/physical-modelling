@@ -3,9 +3,7 @@
 void Attractor::update()
 {
     for (auto &disk : *disks)
-    {
         attract(disk.get());
-    }
 }
 
 void Attractor::draw()
