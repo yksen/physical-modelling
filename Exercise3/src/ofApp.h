@@ -1,7 +1,6 @@
 #pragma once
 
-#include "ofMain.h"
-#include "ofxGui.h"
+#include "Attractor.h"
 #include "Disk.h"
 
 class ofApp : public ofBaseApp
@@ -18,6 +17,7 @@ public:
 	void mouseReleased(int x, int y, int button);
 	void windowResized(int w, int h);
 
+	void updateDt(float &dt);
 	void processMouseInput();
 	void spawnAttractor(int x, int y);
 	void spawnDisk(int x, int y);
@@ -32,6 +32,7 @@ private:
 	ofxPanel gui;
 	ofxToggle areAttractorsVisible;
 	ofxToggle isViscosityVisible;
+	ofxToggle areDisksAttracting;
 	ofxButton clearAttractors;
 	ofxButton clearDisks;
 	ofxFloatSlider dt;
@@ -39,9 +40,8 @@ private:
 	float minDiskRadius = 10.f;
 	float maxDiskRadius = 30.f;
 
-	ofImage viscosityImage;
+	std::vector<unique_ptr<Object>> attractors;
+	std::vector<unique_ptr<Object>> disks;
 	std::vector<std::vector<float>> viscosity;
-
-	std::vector<Disk> disks;
-	std::vector<Attractor> attractors;
+	ofImage viscosityImage;
 };

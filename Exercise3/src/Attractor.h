@@ -1,13 +1,14 @@
 #pragma once
 
+#include "ofMain.h"
+#include "ofxGui.h"
 #include "Object.h"
 
-class Disk : public Object
+class Attractor : public Object
 {
 public:
     using Object::Object;
 
     void update() override;
-
-    void applyDrag();
+    void draw() override;
 };

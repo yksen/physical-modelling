@@ -10,14 +10,20 @@ void ofApp::setup()
     ofSetCircleResolution(100);
     ofSetFrameRate(144);
 
+    Object::attractors = &attractors;
+    Object::disks = &disks;
+    Object::viscosity = &viscosity;
+
     clearAttractors.addListener(this, &ofApp::clearAttractorsPressed);
     clearDisks.addListener(this, &ofApp::clearDisksPressed);
+    dt.addListener(this, &ofApp::updateDt);
 
     gui.setup();
-    gui.add(areAttractorsVisible.setup("Show Attractors", true));
+    gui.add(areAttractorsVisible.setup("Show attractors", true));
     gui.add(isViscosityVisible.setup("Show viscosity", true));
-    gui.add(clearAttractors.setup("Clear Attractors"));
-    gui.add(clearDisks.setup("Clear Disks"));
+    gui.add(areDisksAttracting.setup("Interdisk attraction", false));
+    gui.add(clearAttractors.setup("Clear attractors"));
+    gui.add(clearDisks.setup("Clear disks"));
     gui.add(dt.setup("dt", 1.f, -10.f, 10.f));
     gui.add(attractorRadius.setup("attractor radius", 15.f, 1.f, 100.f));
 
@@ -28,8 +34,10 @@ void ofApp::update()
 {
     processMouseInput();
 
+    for (auto &attractor : attractors)
+        attractor->update();
     for (auto &disk : disks)
-        disk.update(dt);
+        disk->update();
 }
 
 void ofApp::draw()
@@ -41,10 +49,10 @@ void ofApp::draw()
     }
 
     for (auto &disk : disks)
-        disk.draw();
+        disk->draw();
     if (areAttractorsVisible)
         for (auto &attractor : attractors)
-            attractor.draw();
+            attractor->draw();
 
     if (isGuiVisible)
         gui.draw();
@@ -75,6 +83,11 @@ void ofApp::windowResized(int w, int h)
     generateViscosity(w, h);
 }
 
+void ofApp::updateDt(float &dt)
+{
+    Object::dt = dt;
+}
+
 void ofApp::processMouseInput()
 {
     if (isMouseButtonLeftPressed)
@@ -83,20 +96,13 @@ void ofApp::processMouseInput()
 
 void ofApp::spawnAttractor(int x, int y)
 {
-    attractors.push_back({ofVec2f(x, y), attractorRadius, attractorRadius});
+    attractors.push_back(make_unique<Attractor>(ofVec2f(x, y), ofVec2f(0, 0), attractorRadius, attractorRadius));
 }
 
 void ofApp::spawnDisk(int x, int y)
 {
     float radius = ofRandom(minDiskRadius, maxDiskRadius);
-    disks.push_back(
-        Disk(
-            ofVec2f(x, y),
-            ofVec2f(0, 0),
-            radius,
-            radius,
-            &attractors,
-            &viscosity));
+    disks.push_back(make_unique<Disk>(ofVec2f(x, y), ofVec2f(0, 0), radius, radius));
 }
 
 void ofApp::clearAttractorsPressed()
@@ -117,7 +123,7 @@ void ofApp::generateViscosity(int width, int height)
     for (size_t x = 0; x < viscosity.size(); ++x)
         for (size_t y = 0; y < viscosity[x].size(); ++y)
         {
-            float noiseValue = ofNoise(x / 100, y / 100);
+            float noiseValue = ofNoise(x / 10, y / 10);
             viscosity[x][y] = ofMap(noiseValue, 0.f, 1.f, 0.f, 0.0001f);
             viscosityImage.setColor(x, y, ofColor(noiseValue * 255, noiseValue * 255, noiseValue * 255));
         }
