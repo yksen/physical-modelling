@@ -16,19 +16,21 @@ void ofApp::setup()
 
     clearAttractors.addListener(this, &ofApp::clearAttractorsPressed);
     clearDisks.addListener(this, &ofApp::clearDisksPressed);
+    regenerateViscosity.addListener(this, &ofApp::generateViscosity);
     disksAttractionEnabled.addListener(this, &ofApp::updateDisksAttraction);
     dt.addListener(this, &ofApp::updateDt);
 
     gui.setup();
     gui.add(areAttractorsVisible.setup("Show attractors", true));
     gui.add(isViscosityVisible.setup("Show viscosity", true));
-    gui.add(disksAttractionEnabled.setup("Disks attraction", false));
     gui.add(clearAttractors.setup("Clear attractors"));
     gui.add(clearDisks.setup("Clear disks"));
+    gui.add(regenerateViscosity.setup("Generate viscosity"));
+    gui.add(disksAttractionEnabled.setup("Disks attraction", false));
     gui.add(dt.setup("dt", 1.f, -10.f, 10.f));
     gui.add(attractorRadius.setup("attractor radius", 15.f, 1.f, 100.f));
 
-    generateViscosity(ofGetWidth(), ofGetHeight());
+    generateViscosity();
 }
 
 void ofApp::update()
@@ -81,7 +83,7 @@ void ofApp::mouseReleased(int x, int y, int button)
 
 void ofApp::windowResized(int w, int h)
 {
-    generateViscosity(w, h);
+    generateViscosity();
 }
 
 void ofApp::updateDt(float &dt)
@@ -121,17 +123,22 @@ void ofApp::clearDisksPressed()
     disks.clear();
 }
 
-void ofApp::generateViscosity(int width, int height)
+void ofApp::generateViscosity()
 {
-    viscosity.resize(width);
-    viscosity.assign(width, std::vector<float>(height));
-    viscosityImage.allocate(width, height, OF_IMAGE_COLOR);
+    ofVec2f window_size = ofGetWindowSize();
+
+    viscosity.resize(window_size.x);
+    viscosity.assign(window_size.x, std::vector<float>(window_size.y));
+    viscosityImage.allocate(window_size.x, window_size.y, OF_IMAGE_COLOR);
+
+    ofVec2f offset(ofRandom(10000), ofRandom(10000));
+
     for (size_t x = 0; x < viscosity.size(); ++x)
         for (size_t y = 0; y < viscosity[x].size(); ++y)
         {
-            float noiseValue = ofNoise(x / 10, y / 10);
+            float noiseValue = ofNoise((offset.x + x) / window_size.x, (offset.y + y) / window_size.y);
             viscosity[x][y] = ofMap(noiseValue, 0.f, 1.f, 0.f, 0.0001f);
-            viscosityImage.setColor(x, y, ofColor(noiseValue * 255, noiseValue * 255, noiseValue * 255));
+            viscosityImage.setColor(x, y, ofColor(noiseValue * 255));
         }
     viscosityImage.update();
 }

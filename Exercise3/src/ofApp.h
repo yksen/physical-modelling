@@ -24,7 +24,7 @@ public:
 	void spawnDisk(int x, int y);
 	void clearAttractorsPressed();
 	void clearDisksPressed();
-	void generateViscosity(int width, int height);
+	void generateViscosity();
 
 private:
 	bool isMouseButtonLeftPressed = false;
@@ -33,9 +33,10 @@ private:
 	ofxPanel gui;
 	ofxToggle areAttractorsVisible;
 	ofxToggle isViscosityVisible;
-	ofxToggle disksAttractionEnabled;
 	ofxButton clearAttractors;
 	ofxButton clearDisks;
+	ofxButton regenerateViscosity;
+	ofxToggle disksAttractionEnabled;
 	ofxFloatSlider dt;
 	ofxFloatSlider attractorRadius;
 	float minDiskRadius = 10.f;
