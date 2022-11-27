@@ -7,6 +7,8 @@
 class Attractor : public Object
 {
 public:
+    static const float ATTRACTOR_BORDER_SIZE;
+
     using Object::Object;
 
     void update() override;
