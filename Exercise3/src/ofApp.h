@@ -31,12 +31,14 @@ private:
 	bool isGuiVisible = true;
 
 	ofxPanel gui;
-	ofxToggle areAttractorsVisible;
-	ofxToggle isViscosityVisible;
-	ofxButton clearAttractors;
-	ofxButton clearDisks;
-	ofxButton regenerateViscosity;
-	ofxToggle disksAttractionEnabled;
+	ofxLabel fpsLabel;
+	ofxLabel diskCountLabel;
+	ofxToggle attractorsVisibilityToggle;
+	ofxToggle viscosityVisibilityToggle;
+	ofxButton clearAttractorsButton;
+	ofxButton clearDisksButton;
+	ofxButton regenerateViscosityButton;
+	ofxToggle disksAttractionToggle;
 	ofxFloatSlider dt;
 	ofxFloatSlider attractorRadius;
 	float minDiskRadius = 10.f;

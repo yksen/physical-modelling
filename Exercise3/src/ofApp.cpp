@@ -14,19 +14,21 @@ void ofApp::setup()
     Object::disks = &disks;
     Object::viscosity = &viscosity;
 
-    clearAttractors.addListener(this, &ofApp::clearAttractorsPressed);
-    clearDisks.addListener(this, &ofApp::clearDisksPressed);
-    regenerateViscosity.addListener(this, &ofApp::generateViscosity);
-    disksAttractionEnabled.addListener(this, &ofApp::updateDisksAttraction);
+    clearAttractorsButton.addListener(this, &ofApp::clearAttractorsPressed);
+    clearDisksButton.addListener(this, &ofApp::clearDisksPressed);
+    regenerateViscosityButton.addListener(this, &ofApp::generateViscosity);
+    disksAttractionToggle.addListener(this, &ofApp::updateDisksAttraction);
     dt.addListener(this, &ofApp::updateDt);
 
     gui.setup();
-    gui.add(areAttractorsVisible.setup("Show attractors", true));
-    gui.add(isViscosityVisible.setup("Show viscosity", true));
-    gui.add(clearAttractors.setup("Clear attractors"));
-    gui.add(clearDisks.setup("Clear disks"));
-    gui.add(regenerateViscosity.setup("Generate viscosity"));
-    gui.add(disksAttractionEnabled.setup("Disks attraction", false));
+    gui.add(fpsLabel.setup("FPS", "0"));
+    gui.add(diskCountLabel.setup("Disk count", "0"));
+    gui.add(attractorsVisibilityToggle.setup("Show attractors", true));
+    gui.add(viscosityVisibilityToggle.setup("Show viscosity", true));
+    gui.add(clearAttractorsButton.setup("Clear attractors"));
+    gui.add(clearDisksButton.setup("Clear disks"));
+    gui.add(regenerateViscosityButton.setup("Generate viscosity"));
+    gui.add(disksAttractionToggle.setup("Disks attraction", false));
     gui.add(dt.setup("dt", 1.f, -10.f, 10.f));
     gui.add(attractorRadius.setup("attractor radius", 15.f, 1.f, 100.f));
 
@@ -41,22 +43,21 @@ void ofApp::update()
         attractor->update();
     for (auto &disk : disks)
         disk->update();
+    fpsLabel = ofToString(ofGetFrameRate());
 }
 
 void ofApp::draw()
 {
-    if (isViscosityVisible)
+    if (viscosityVisibilityToggle)
     {
-        ofSetColor(255);
+        ofSetColor(ofColor::white);
         viscosityImage.draw(0.f, 0.f);
     }
-
     for (auto &disk : disks)
         disk->draw();
-    if (areAttractorsVisible)
+    if (attractorsVisibilityToggle)
         for (auto &attractor : attractors)
             attractor->draw();
-
     if (isGuiVisible)
         gui.draw();
 }
@@ -111,6 +112,7 @@ void ofApp::spawnDisk(int x, int y)
 {
     float radius = ofRandom(minDiskRadius, maxDiskRadius);
     disks.push_back(make_unique<Disk>(ofVec2f(x, y), ofVec2f(0, 0), radius, radius));
+    diskCountLabel = ofToString(disks.size());
 }
 
 void ofApp::clearAttractorsPressed()
