@@ -9,6 +9,10 @@ public:
 	ofApp();
 
 	void setup();
+	void bindStaticReferences();
+	void setupGuiListeners();
+	void setupGui();
+	
 	void update();
 	void draw();
 

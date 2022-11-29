@@ -10,16 +10,30 @@ void ofApp::setup()
     ofSetCircleResolution(100);
     ofSetFrameRate(144);
 
+    bindStaticReferences();
+    setupGuiListeners();
+    setupGui();
+    generateViscosity();
+}
+
+void ofApp::bindStaticReferences()
+{
     Object::attractors = &attractors;
     Object::disks = &disks;
     Object::viscosity = &viscosity;
+}
 
+void ofApp::setupGuiListeners()
+{
     clearAttractorsButton.addListener(this, &ofApp::clearAttractorsPressed);
     clearDisksButton.addListener(this, &ofApp::clearDisksPressed);
     regenerateViscosityButton.addListener(this, &ofApp::generateViscosity);
     disksAttractionToggle.addListener(this, &ofApp::updateDisksAttraction);
     dt.addListener(this, &ofApp::updateDt);
+}
 
+void ofApp::setupGui()
+{
     gui.setup();
     gui.add(fpsLabel.setup("FPS", "0"));
     gui.add(diskCountLabel.setup("Disk count", "0"));
@@ -31,8 +45,6 @@ void ofApp::setup()
     gui.add(disksAttractionToggle.setup("Disks attraction", false));
     gui.add(dt.setup("dt", 1.f, -10.f, 10.f));
     gui.add(attractorRadius.setup("attractor radius", 15.f, 1.f, 100.f));
-
-    generateViscosity();
 }
 
 void ofApp::update()
