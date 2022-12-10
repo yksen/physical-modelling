@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Particle.hpp"
+#include "ParticleEmitters.hpp"
+#include "ParticleUpdaters.hpp"
 
 class ParticleSystem
 {
@@ -11,6 +13,8 @@ public:
     void draw();
     void update();
 
-    std::vector<unique_ptr<Particle>> particles;
     float dt;
+    std::vector<unique_ptr<Particle>> particles;
+    std::vector<unique_ptr<ParticleEmitter>> emitters;
+    std::vector<unique_ptr<ParticleUpdater>> updaters;
 };

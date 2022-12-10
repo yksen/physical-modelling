@@ -18,4 +18,6 @@ void ParticleSystem::draw()
 
 void ParticleSystem::update()
 {
+    for (auto &updater : updaters)
+        updater->update();
 }
