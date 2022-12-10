@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ParticleSystem.hpp"
-#include "ParticleEmitters.hpp"
 #include "ParticleGenerators.hpp"
 #include "ParticleUpdaters.hpp"
 
@@ -17,5 +16,5 @@ public:
 	void windowResized(int w, int h);
 
 	ofEasyCam camera;
-	ParticleSystem particleSystem;
+	ParticleSystem particleSystem{1000};
 };

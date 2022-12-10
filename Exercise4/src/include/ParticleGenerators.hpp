@@ -2,6 +2,17 @@
 
 #include "ParticleSystem.hpp"
 
+class TimeGenerator : public ParticleGenerator
+{
+public:
+    TimeGenerator(float min = 1, float max = 1) : min(min), max(max){};
+
+    void generate(ParticleData *particles, float dt, size_t start_id, size_t end_id) override;
+
+    float min;
+    float max;
+};
+
 class RandomColorGenerator : public ParticleGenerator
 {
 public:

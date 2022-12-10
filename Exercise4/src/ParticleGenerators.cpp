@@ -1,5 +1,11 @@
 #include "ParticleGenerators.hpp"
 
+void TimeGenerator::generate(ParticleData *particles, float dt, size_t start_id, size_t end_id)
+{
+    for (size_t i = start_id; i < end_id; ++i)
+        particles->time.at(i) = ofRandom(min, max);
+}
+
 void RandomColorGenerator::generate(ParticleData *particles, float dt, size_t start_id, size_t end_id)
 {
     for (size_t i = start_id; i < end_id; ++i)

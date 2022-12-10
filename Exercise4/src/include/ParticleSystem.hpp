@@ -8,9 +8,14 @@ public:
     ParticleData(){};
 
     void generate(size_t count);
+    void kill(size_t index);
+    void wake(size_t index);
+    void swap(size_t first, size_t second);
 
     size_t count{0};
+    size_t alive_count{0};
     std::vector<bool> alive;
+    std::vector<float> time;
     std::vector<ofColor> color;
     std::vector<ofVec3f> position;
     std::vector<ofVec3f> velocity;
@@ -28,13 +33,12 @@ public:
 class ParticleEmitter
 {
 public:
-    ParticleEmitter(ParticleData *particles, size_t count) : start_id(particles->count), end_id(particles->count + count){};
+    ParticleEmitter(float emit_rate) : emit_rate(emit_rate){};
 
     virtual void emit(ParticleData *particles, float dt);
     void addGenerator(std::shared_ptr<ParticleGenerator> generator);
 
-    size_t start_id;
-    size_t end_id;
+    float emit_rate;
     std::vector<std::shared_ptr<ParticleGenerator>> generators;
 };
 
@@ -43,13 +47,13 @@ class ParticleUpdater
 public:
     ParticleUpdater(){};
 
-    virtual void update(float dt) = 0;
+    virtual void update(ParticleData *particles, float dt) = 0;
 };
 
 class ParticleSystem
 {
 public:
-    ParticleSystem(){};
+    ParticleSystem(size_t max_particle_count);
 
     void draw();
     void update(float dt);
