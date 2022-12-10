@@ -1,5 +1,16 @@
 #include "ParticleGenerators.hpp"
 
+void RandomColorGenerator::generate(ParticleData *particles, float dt, size_t start_id, size_t end_id)
+{
+    for (size_t i = start_id; i < end_id; ++i)
+    {
+        particles->color.at(i) = ofColor(
+            ofRandom(min.r, max.r),
+            ofRandom(min.g, max.g),
+            ofRandom(min.b, max.b));
+    }
+}
+
 void BoxPositionGenerator::generate(ParticleData *particles, float dt, size_t start_id, size_t end_id)
 {
     for (size_t i = start_id; i < end_id; ++i)

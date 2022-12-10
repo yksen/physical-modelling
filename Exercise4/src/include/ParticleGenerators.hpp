@@ -2,6 +2,17 @@
 
 #include "ParticleSystem.hpp"
 
+class RandomColorGenerator : public ParticleGenerator
+{
+public:
+    RandomColorGenerator(ofColor min = 0, ofColor max = 255) : min(min), max(max){};
+
+    void generate(ParticleData *particles, float dt, size_t start_id, size_t end_id) override;
+
+    ofColor min;
+    ofColor max;
+};
+
 class BoxPositionGenerator : public ParticleGenerator
 {
 public:
