@@ -6,10 +6,7 @@ void ofApp::setup()
     ofEnableDepthTest();
     ofSetCircleResolution(100);
 
-    particleSystem = ParticleSystem();
-    
-    for (size_t i = 0; i < 100; ++i)
-        particleSystem.addParticle();
+    particleSystem = ParticleSystem(1000);
 }
 
 void ofApp::update()
