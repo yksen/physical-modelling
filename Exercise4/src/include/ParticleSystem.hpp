@@ -5,13 +5,16 @@
 class ParticleData
 {
 public:
-    size_t count{0};
+    ParticleData(){};
 
-    std::unique_ptr<std::vector<bool>> alive;
-    std::unique_ptr<std::vector<ofColor>> color;
-    std::unique_ptr<std::vector<ofVec3f>> position;
-    std::unique_ptr<std::vector<ofVec3f>> velocity;
-    std::unique_ptr<std::vector<ofVec3f>> acceleration;
+    void generate(size_t count);
+
+    size_t count{0};
+    std::vector<bool> alive;
+    std::vector<ofColor> color;
+    std::vector<ofVec3f> position;
+    std::vector<ofVec3f> velocity;
+    std::vector<ofVec3f> acceleration;
 };
 
 class ParticleGenerator
@@ -19,15 +22,15 @@ class ParticleGenerator
 public:
     ParticleGenerator(){};
 
-    virtual void generate(size_t start_id, size_t end_id) = 0;
+    virtual void generate(ParticleData *particles, size_t start_id, size_t end_id) = 0;
 };
 
 class ParticleEmitter
 {
 public:
-    ParticleEmitter(size_t count, ParticleData *particles);
+    ParticleEmitter(ParticleData *particles, size_t count) : start_id(particles->count), end_id(particles->count + count){};
 
-    virtual void emit();
+    virtual void emit(ParticleData *particles);
     void addGenerator(std::shared_ptr<ParticleGenerator> generator);
 
     size_t start_id;
