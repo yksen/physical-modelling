@@ -6,7 +6,8 @@ void ofApp::setup()
     ofEnableDepthTest();
     ofSetCircleResolution(100);
 
-    particleSystem = ParticleSystem(1000);
+    particleSystem = ParticleSystem();
+    particleSystem.addEmitter(std::make_shared<ParticleEmitter>(100, &particleSystem.particles));
 }
 
 void ofApp::update()
