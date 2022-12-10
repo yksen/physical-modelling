@@ -13,7 +13,7 @@ void ofApp::setup()
 
 void ofApp::update()
 {
-    particleSystem.update();
+    particleSystem.update(ofGetLastFrameTime());
 }
 
 void ofApp::draw()

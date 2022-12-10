@@ -22,7 +22,7 @@ class ParticleGenerator
 public:
     ParticleGenerator(){};
 
-    virtual void generate(ParticleData *particles, size_t start_id, size_t end_id) = 0;
+    virtual void generate(ParticleData *particles, float dt, size_t start_id, size_t end_id) = 0;
 };
 
 class ParticleEmitter
@@ -30,7 +30,7 @@ class ParticleEmitter
 public:
     ParticleEmitter(ParticleData *particles, size_t count) : start_id(particles->count), end_id(particles->count + count){};
 
-    virtual void emit(ParticleData *particles);
+    virtual void emit(ParticleData *particles, float dt);
     void addGenerator(std::shared_ptr<ParticleGenerator> generator);
 
     size_t start_id;
@@ -43,7 +43,7 @@ class ParticleUpdater
 public:
     ParticleUpdater(){};
 
-    virtual void update() = 0;
+    virtual void update(float dt) = 0;
 };
 
 class ParticleSystem
@@ -52,12 +52,12 @@ public:
     ParticleSystem(){};
 
     void draw();
-    void update();
+    void update(float dt);
 
     void addEmitter(std::shared_ptr<ParticleEmitter> emitter);
     void addUpdater(std::shared_ptr<ParticleUpdater> updater);
 
-    float dt;
+    float dt{0};
     ParticleData particles;
     std::vector<std::shared_ptr<ParticleEmitter>> emitters;
     std::vector<std::shared_ptr<ParticleUpdater>> updaters;

@@ -10,10 +10,10 @@ void ParticleData::generate(size_t count)
     acceleration.resize(count);
 }
 
-void ParticleEmitter::emit(ParticleData *particles)
+void ParticleEmitter::emit(ParticleData *particles, float dt)
 {
     for (auto &generator : generators)
-        generator->generate(particles, start_id, end_id);
+        generator->generate(particles, dt, start_id, end_id);
 }
 
 void ParticleEmitter::addGenerator(std::shared_ptr<ParticleGenerator> generator)
@@ -30,13 +30,13 @@ void ParticleSystem::draw()
     }
 }
 
-void ParticleSystem::update()
+void ParticleSystem::update(float dt)
 {
     for (auto &emitter : emitters)
-        emitter->emit(&particles);
+        emitter->emit(&particles, dt);
 
     for (auto &updater : updaters)
-        updater->update();
+        updater->update(dt);
 }
 
 void ParticleSystem::addEmitter(std::shared_ptr<ParticleEmitter> emitter)
