@@ -4,7 +4,7 @@
 int main()
 {
 	ofGLWindowSettings settings;
-	settings.windowMode = OF_FULLSCREEN;
+	settings.windowMode = ofWindowMode::OF_GAME_MODE;
 
 	auto window = ofCreateWindow(settings);
 

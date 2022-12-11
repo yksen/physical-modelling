@@ -36,15 +36,3 @@ void ofApp::draw()
     ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 20);
     ofDrawBitmapString(ofToString(particleSystem.particles.alive_count), 10, 40);
 }
-
-void ofApp::keyPressed(int key)
-{
-}
-
-void ofApp::keyReleased(int key)
-{
-}
-
-void ofApp::windowResized(int w, int h)
-{
-}
