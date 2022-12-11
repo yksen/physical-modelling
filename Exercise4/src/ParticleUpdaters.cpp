@@ -1,5 +1,15 @@
 #include "ParticleUpdaters.hpp"
 
+void FloorUpdater::update(ParticleData *particles, float dt)
+{
+    size_t end_id = particles->alive_count;
+    for (size_t i = 0; i < end_id; ++i)
+    {
+        if (particles->position.at(i).y <= floor_level)
+            particles->position.at(i).y = floor_level;
+    }
+}
+
 void GravityUpdater::update(ParticleData *particles, float dt)
 {
     size_t end_id = particles->alive_count;

@@ -15,6 +15,7 @@ void ofApp::setup()
 
     particle_system.addUpdater(std::make_shared<GravityUpdater>());
     particle_system.addUpdater(std::make_shared<EulerUpdater>());
+    particle_system.addUpdater(std::make_shared<FloorUpdater>(-100.f));
     particle_system.addUpdater(std::make_shared<TimeUpdater>());
 }
 
