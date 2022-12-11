@@ -6,17 +6,15 @@ void ofApp::setup()
     ofEnableDepthTest();
     ofSetCircleResolution(100);
 
+    particleSystem.addEmitter(std::make_shared<StaticBoxEmitter>(1000, ofVec3f(0, 0, 0), ofVec3f(100, 100, 100)));
+    particleSystem.addEmitter(std::make_shared<StaticSphereEmitter>(1000, ofVec3f(200, 0, 0), 100));
+    particleSystem.addEmitter(std::make_shared<StaticSphereEmitter>(1000, ofVec3f(-200, 0, 0), 100));
+    particleSystem.addEmitter(std::make_shared<StaticSphereEmitter>(1000, ofVec3f(0, 200, 0), 100));
+    particleSystem.addEmitter(std::make_shared<StaticSphereEmitter>(1000, ofVec3f(0, -200, 0), 100));
+    particleSystem.addEmitter(std::make_shared<StaticSphereEmitter>(1000, ofVec3f(0, 0, 200), 100));
+    particleSystem.addEmitter(std::make_shared<StaticSphereEmitter>(1000, ofVec3f(0, 0, -200), 100));
+
     particleSystem.addUpdater(std::make_shared<TimeUpdater>());
-
-    particleSystem.addEmitter(std::make_shared<ParticleEmitter>(100));
-    particleSystem.emitters[0]->addGenerator(std::make_shared<TimeGenerator>());
-    particleSystem.emitters[0]->addGenerator(std::make_shared<RandomColorGenerator>());
-    particleSystem.emitters[0]->addGenerator(std::make_shared<BoxPositionGenerator>(ofVec3f(0, 0, 0), ofVec3f(100, 100, 100)));
-
-    particleSystem.addEmitter(std::make_shared<ParticleEmitter>(100));
-    particleSystem.emitters[1]->addGenerator(std::make_shared<TimeGenerator>());
-    particleSystem.emitters[1]->addGenerator(std::make_shared<RandomColorGenerator>());
-    particleSystem.emitters[1]->addGenerator(std::make_shared<SpherePositionGenerator>(ofVec3f(0, 200, 0), 100));
 }
 
 void ofApp::update()
@@ -36,6 +34,7 @@ void ofApp::draw()
 
     ofSetColor(255);
     ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 20);
+    ofDrawBitmapString(ofToString(particleSystem.particles.alive_count), 10, 40);
 }
 
 void ofApp::keyPressed(int key)

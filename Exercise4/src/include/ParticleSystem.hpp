@@ -61,7 +61,6 @@ public:
     void addEmitter(std::shared_ptr<ParticleEmitter> emitter);
     void addUpdater(std::shared_ptr<ParticleUpdater> updater);
 
-    float dt{0};
     ParticleData particles;
     std::vector<std::shared_ptr<ParticleEmitter>> emitters;
     std::vector<std::shared_ptr<ParticleUpdater>> updaters;
