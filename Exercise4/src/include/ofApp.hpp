@@ -13,5 +13,5 @@ public:
 	void draw();
 	
 	ofEasyCam camera;
-	ParticleSystem particleSystem{10000};
+	ParticleSystem particle_system{10000};
 };

@@ -20,10 +20,10 @@ StaticSphereEmitter::StaticSphereEmitter(float emit_rate, ofVec3f origin, float 
     addGenerator(std::make_shared<SpherePositionGenerator>(origin, radius));
 }
 
-ExplosionEmitter::ExplosionEmitter(float emit_rate, ofVec3f origin, float power) : ParticleEmitter(emit_rate)
+ExplosionEmitter::ExplosionEmitter(float emit_rate, ofVec3f origin, float power, ofColor min_color, ofColor max_color) : ParticleEmitter(emit_rate)
 {
     addGenerator(common::time_generator);
-    addGenerator(std::make_shared<RandomColorGenerator>(ofColor(255, 0, 0), ofColor(255, 255, 0)));
+    addGenerator(std::make_shared<RandomColorGenerator>(min_color, max_color));
     addGenerator(std::make_shared<SpherePositionGenerator>(origin, 1));
     addGenerator(std::make_shared<VelocityGenerator>(ofVec3f(-power), ofVec3f(power)));
 }

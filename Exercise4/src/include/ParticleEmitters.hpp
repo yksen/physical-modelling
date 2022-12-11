@@ -17,5 +17,5 @@ public:
 class ExplosionEmitter : public ParticleEmitter
 {
 public:
-    ExplosionEmitter(float emit_rate, ofVec3f origin, float power);
+    ExplosionEmitter(float emit_rate, ofVec3f origin, float power, ofColor min_color, ofColor max_color);
 };

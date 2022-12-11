@@ -3,18 +3,23 @@
 void ofApp::setup()
 {
     ofSetVerticalSync(true);
-    ofEnableDepthTest();
     ofSetCircleResolution(100);
 
-    particleSystem.addEmitter(std::make_shared<ExplosionEmitter>(1000, ofVec3f(0, 0, 0), 1000));
+    size_t emit_rate = 1000;
+    float explosion_power = 1000;
 
-    particleSystem.addUpdater(std::make_shared<EulerUpdater>());
-    particleSystem.addUpdater(std::make_shared<TimeUpdater>());
+    particle_system.addEmitter(std::make_shared<ExplosionEmitter>(
+        emit_rate, ofVec3f(-300, 0, 0), explosion_power, ofColor(255, 0, 0), ofColor(255, 255, 0)));
+    particle_system.addEmitter(std::make_shared<ExplosionEmitter>(
+        emit_rate, ofVec3f(300, 0, 0), explosion_power, ofColor(0, 0, 255), ofColor(0, 255, 255)));
+
+    particle_system.addUpdater(std::make_shared<EulerUpdater>());
+    particle_system.addUpdater(std::make_shared<TimeUpdater>());
 }
 
 void ofApp::update()
 {
-    particleSystem.update(float(ofGetLastFrameTime()));
+    particle_system.update(float(ofGetLastFrameTime()));
 }
 
 void ofApp::draw()
@@ -23,11 +28,11 @@ void ofApp::draw()
 
     camera.begin();
     ofEnableDepthTest();
-    particleSystem.draw();
+    particle_system.draw();
     ofDisableDepthTest();
     camera.end();
 
     ofSetColor(255);
     ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 20);
-    ofDrawBitmapString(ofToString(particleSystem.particles.alive_count), 10, 40);
+    ofDrawBitmapString(ofToString(particle_system.particles.alive_count), 10, 40);
 }
