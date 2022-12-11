@@ -14,16 +14,18 @@ void GravityUpdater::update(ParticleData *particles, float dt)
 {
     size_t end_id = particles->alive_count;
     for (size_t i = 0; i < end_id; ++i)
-        particles->acceleration.at(i) += gravity * dt;
+        particles->acceleration.at(i) += gravity;
 }
 
 void EulerUpdater::update(ParticleData *particles, float dt)
 {
     size_t end_id = particles->alive_count;
     for (size_t i = 0; i < end_id; ++i)
+    {
         particles->velocity.at(i) += particles->acceleration.at(i) * dt;
-    for (size_t i = 0; i < end_id; ++i)
         particles->position.at(i) += particles->velocity.at(i) * dt;
+        particles->acceleration.at(i) = ofVec3f(0.f);
+    }
 }
 
 void TimeUpdater::update(ParticleData *particles, float dt)

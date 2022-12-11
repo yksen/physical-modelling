@@ -6,7 +6,7 @@ void ofApp::setup()
     ofSetCircleResolution(100);
 
     size_t emit_rate = 1000;
-    float explosion_power = 100;
+    float explosion_power = 10;
 
     particle_system.addEmitter(std::make_shared<ExplosionEmitter>(
         emit_rate, ofVec3f(-100, 0, 0), explosion_power, ofColor(255, 0, 0), ofColor(255, 255, 0)));
