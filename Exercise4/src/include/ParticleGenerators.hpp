@@ -45,3 +45,14 @@ public:
     ofVec3f origin;
     float radius;
 };
+
+class VelocityGenerator : public ParticleGenerator
+{
+public:
+    VelocityGenerator(ofVec3f min, ofVec3f max) : min(min), max(max){};
+
+    void generate(ParticleData *particles, float dt, size_t start_id, size_t end_id) override;
+
+    ofVec3f min;
+    ofVec3f max;
+};

@@ -13,3 +13,9 @@ class StaticSphereEmitter : public ParticleEmitter
 public:
     StaticSphereEmitter(float emit_rate, ofVec3f origin, float radius);
 };
+
+class ExplosionEmitter : public ParticleEmitter
+{
+public:
+    ExplosionEmitter(float emit_rate, ofVec3f origin, float power);
+};

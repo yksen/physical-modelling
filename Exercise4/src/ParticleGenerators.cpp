@@ -40,3 +40,14 @@ void SpherePositionGenerator::generate(ParticleData *particles, float dt, size_t
         particles->position.at(i) = ofVec3f(x, y, z);
     }
 }
+
+void VelocityGenerator::generate(ParticleData *particles, float dt, size_t start_id, size_t end_id)
+{
+    for (size_t i = start_id; i < end_id; ++i)
+    {
+        particles->velocity.at(i) = ofVec3f(
+            ofRandom(min.x, max.x),
+            ofRandom(min.y, max.y),
+            ofRandom(min.z, max.z));
+    }
+}

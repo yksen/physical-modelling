@@ -6,14 +6,9 @@ void ofApp::setup()
     ofEnableDepthTest();
     ofSetCircleResolution(100);
 
-    particleSystem.addEmitter(std::make_shared<StaticBoxEmitter>(1000, ofVec3f(0, 0, 0), ofVec3f(100, 100, 100)));
-    particleSystem.addEmitter(std::make_shared<StaticSphereEmitter>(1000, ofVec3f(200, 0, 0), 100));
-    particleSystem.addEmitter(std::make_shared<StaticSphereEmitter>(1000, ofVec3f(-200, 0, 0), 100));
-    particleSystem.addEmitter(std::make_shared<StaticSphereEmitter>(1000, ofVec3f(0, 200, 0), 100));
-    particleSystem.addEmitter(std::make_shared<StaticSphereEmitter>(1000, ofVec3f(0, -200, 0), 100));
-    particleSystem.addEmitter(std::make_shared<StaticSphereEmitter>(1000, ofVec3f(0, 0, 200), 100));
-    particleSystem.addEmitter(std::make_shared<StaticSphereEmitter>(1000, ofVec3f(0, 0, -200), 100));
+    particleSystem.addEmitter(std::make_shared<ExplosionEmitter>(1000, ofVec3f(0, 0, 0), 1000));
 
+    particleSystem.addUpdater(std::make_shared<EulerUpdater>());
     particleSystem.addUpdater(std::make_shared<TimeUpdater>());
 }
 
