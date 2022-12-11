@@ -9,7 +9,7 @@ void ofApp::setup()
     float explosion_power = 10;
 
     particle_system.addEmitter(std::make_shared<SnowfallEmitter>(
-        emit_rate, ofVec3f(0, 100, 0), 100));
+        emit_rate, ofVec3f(0, 200, 0), 100));
     particle_system.addEmitter(std::make_shared<ExplosionEmitter>(
         emit_rate, ofVec3f(-50, 0, 0), explosion_power, ofColor(255, 0, 0), ofColor(255, 255, 0)));
     particle_system.addEmitter(std::make_shared<ExplosionEmitter>(
