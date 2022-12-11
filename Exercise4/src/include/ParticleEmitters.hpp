@@ -25,3 +25,9 @@ class SnowfallEmitter : public ParticleEmitter
 public:
     SnowfallEmitter(float emit_rate, ofVec3f origin, float radius);
 };
+
+class FireEmitter : public ParticleEmitter
+{
+public:
+    FireEmitter(float emit_rate, ofVec3f origin, float radius);
+};

@@ -33,3 +33,12 @@ class TimeUpdater : public ParticleUpdater
 public:
     void update(ParticleData *particles, float dt) override;
 };
+
+class TimeColorUpdater : public ParticleUpdater
+{
+public:
+    void update(ParticleData *particles, float dt) override;
+
+    ofColor min_color;
+    ofColor max_color;
+};

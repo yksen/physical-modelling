@@ -2,7 +2,7 @@
 
 namespace common
 {
-    auto short_time_generator = std::make_shared<TimeGenerator>(3, 6);
+    auto short_time_generator = std::make_shared<TimeGenerator>(2, 4);
     auto long_time_generator = std::make_shared<TimeGenerator>(6, 12);
     auto random_color_generator = std::make_shared<RandomColorGenerator>();
 }
@@ -35,4 +35,12 @@ SnowfallEmitter::SnowfallEmitter(float emit_rate, ofVec3f origin, float radius) 
     addGenerator(std::make_shared<RandomColorGenerator>(ofColor(120, 2230, 255), ofColor(255, 255, 255)));
     addGenerator(std::make_shared<CylinderPositionGenerator>(origin, radius, 1));
     addGenerator(std::make_shared<VelocityGenerator>(ofVec3f(0), ofVec3f(0)));
+}
+
+FireEmitter::FireEmitter(float emit_rate, ofVec3f origin, float radius) : ParticleEmitter(emit_rate)
+{
+    addGenerator(common::short_time_generator);
+    addGenerator(std::make_shared<RandomColorGenerator>(ofColor(255, 0, 0), ofColor(255, 255, 0)));
+    addGenerator(std::make_shared<CylinderPositionGenerator>(origin, radius, 1));
+    addGenerator(std::make_shared<VelocityGenerator>(ofVec3f(0, 30, 0), ofVec3f(0, 50, 0)));
 }

@@ -15,7 +15,7 @@ public:
     size_t count{0};
     size_t alive_count{0};
     std::vector<bool> alive;
-    std::vector<float> time;
+    std::vector<ofVec3f> time;
     std::vector<ofColor> color;
     std::vector<ofVec3f> position;
     std::vector<ofVec3f> velocity;
