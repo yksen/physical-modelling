@@ -6,12 +6,12 @@ void ofApp::setup()
     ofSetCircleResolution(100);
 
     size_t emit_rate = 1000;
-    float explosion_power = 1000;
+    float explosion_power = 100;
 
     particle_system.addEmitter(std::make_shared<ExplosionEmitter>(
-        emit_rate, ofVec3f(-300, 0, 0), explosion_power, ofColor(255, 0, 0), ofColor(255, 255, 0)));
+        emit_rate, ofVec3f(-100, 0, 0), explosion_power, ofColor(255, 0, 0), ofColor(255, 255, 0)));
     particle_system.addEmitter(std::make_shared<ExplosionEmitter>(
-        emit_rate, ofVec3f(300, 0, 0), explosion_power, ofColor(0, 0, 255), ofColor(0, 255, 255)));
+        emit_rate, ofVec3f(100, 0, 0), explosion_power, ofColor(0, 0, 255), ofColor(0, 255, 255)));
 
     particle_system.addUpdater(std::make_shared<EulerUpdater>());
     particle_system.addUpdater(std::make_shared<TimeUpdater>());

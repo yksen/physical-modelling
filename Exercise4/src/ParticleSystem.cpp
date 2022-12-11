@@ -61,7 +61,7 @@ void ParticleSystem::draw()
     for (size_t i = 0; i < particles.alive_count; ++i)
     {
         ofSetColor(particles.color.at(i));
-        ofDrawSphere(particles.position.at(i), 10);
+        ofDrawSphere(particles.position.at(i), 1);
     }
 }
 
