@@ -28,6 +28,20 @@ void BoxPositionGenerator::generate(ParticleData *particles, float dt, size_t st
     }
 }
 
+void CylinderPositionGenerator::generate(ParticleData *particles, float dt, size_t start_id, size_t end_id)
+{
+    for (size_t i = start_id; i < end_id; ++i)
+    {
+        float theta = ofRandom(2 * PI);
+        float u = ofRandom(radius) + ofRandom(radius);
+        float r = u > radius ? 2 - u : u;
+        float x = origin.x + r * cos(theta);
+        float y = origin.y + ofRandom(-height / 2, height / 2);
+        float z = origin.z + r * sin(theta);
+        particles->position.at(i) = ofVec3f(x, y, z);
+    }
+}
+
 void SpherePositionGenerator::generate(ParticleData *particles, float dt, size_t start_id, size_t end_id)
 {
     for (size_t i = start_id; i < end_id; ++i)

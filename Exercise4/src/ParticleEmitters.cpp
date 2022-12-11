@@ -27,3 +27,10 @@ ExplosionEmitter::ExplosionEmitter(float emit_rate, ofVec3f origin, float power,
     addGenerator(std::make_shared<SpherePositionGenerator>(origin, 1));
     addGenerator(std::make_shared<VelocityGenerator>(ofVec3f(-power), ofVec3f(power)));
 }
+
+SnowfallEmitter::SnowfallEmitter(float emit_rate, ofVec3f origin, float radius) : ParticleEmitter(emit_rate)
+{
+    addGenerator(common::time_generator);
+    addGenerator(std::make_shared<RandomColorGenerator>(ofColor(120, 2230, 255), ofColor(255, 255, 255)));
+    addGenerator(std::make_shared<CylinderPositionGenerator>(origin, radius, 1));
+}

@@ -5,13 +5,15 @@ void ofApp::setup()
     ofSetVerticalSync(true);
     ofSetCircleResolution(100);
 
-    size_t emit_rate = 1000;
+    size_t emit_rate = 500;
     float explosion_power = 10;
 
+    particle_system.addEmitter(std::make_shared<SnowfallEmitter>(
+        emit_rate, ofVec3f(0, 100, 0), 100));
     particle_system.addEmitter(std::make_shared<ExplosionEmitter>(
-        emit_rate, ofVec3f(-100, 0, 0), explosion_power, ofColor(255, 0, 0), ofColor(255, 255, 0)));
+        emit_rate, ofVec3f(-50, 0, 0), explosion_power, ofColor(255, 0, 0), ofColor(255, 255, 0)));
     particle_system.addEmitter(std::make_shared<ExplosionEmitter>(
-        emit_rate, ofVec3f(100, 0, 0), explosion_power, ofColor(0, 0, 255), ofColor(0, 255, 255)));
+        emit_rate, ofVec3f(50, 0, 0), explosion_power, ofColor(0, 0, 255), ofColor(0, 255, 255)));
 
     particle_system.addUpdater(std::make_shared<GravityUpdater>());
     particle_system.addUpdater(std::make_shared<EulerUpdater>());

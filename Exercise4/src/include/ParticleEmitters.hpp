@@ -19,3 +19,9 @@ class ExplosionEmitter : public ParticleEmitter
 public:
     ExplosionEmitter(float emit_rate, ofVec3f origin, float power, ofColor min_color, ofColor max_color);
 };
+
+class SnowfallEmitter : public ParticleEmitter
+{
+public:
+    SnowfallEmitter(float emit_rate, ofVec3f origin, float radius);
+};

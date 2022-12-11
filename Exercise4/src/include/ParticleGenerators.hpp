@@ -35,6 +35,18 @@ public:
     ofVec3f range;
 };
 
+class CylinderPositionGenerator : public ParticleGenerator
+{
+public:
+    CylinderPositionGenerator(ofVec3f origin, float radius, float height) : origin(origin), radius(radius), height(height){};
+
+    void generate(ParticleData *particles, float dt, size_t start_id, size_t end_id) override;
+
+    ofVec3f origin;
+    float radius;
+    float height;
+};
+
 class SpherePositionGenerator : public ParticleGenerator
 {
 public:
