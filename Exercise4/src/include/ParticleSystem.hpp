@@ -33,11 +33,12 @@ public:
 class ParticleEmitter
 {
 public:
-    ParticleEmitter(float emit_rate) : emit_rate(emit_rate){};
+    ParticleEmitter(float emit_rate, ofVec3f origin) : emit_rate(emit_rate), origin(origin){};
 
     virtual void emit(ParticleData *particles, float dt);
     void addGenerator(std::shared_ptr<ParticleGenerator> generator);
 
+    ofVec3f origin;
     float emit_rate;
     std::vector<std::shared_ptr<ParticleGenerator>> generators;
 };

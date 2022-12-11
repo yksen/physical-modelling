@@ -51,9 +51,9 @@ void SpherePositionGenerator::generate(ParticleData *particles, float dt, size_t
     {
         float theta = ofRandom(0, 2 * PI);
         float phi = ofRandom(0, 2 * PI);
-        float x = origin.x + radius * sin(theta) * cos(phi);
-        float y = origin.y + radius * sin(theta) * sin(phi);
-        float z = origin.z + radius * cos(theta);
+        float x = origin->x + radius * sin(theta) * cos(phi);
+        float y = origin->y + radius * sin(theta) * sin(phi);
+        float z = origin->z + radius * cos(theta);
         particles->position.at(i) = ofVec3f(x, y, z);
     }
 }

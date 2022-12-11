@@ -50,11 +50,11 @@ public:
 class SpherePositionGenerator : public ParticleGenerator
 {
 public:
-    SpherePositionGenerator(ofVec3f origin, float radius) : origin(origin), radius(radius){};
+    SpherePositionGenerator(ofVec3f *origin, float radius) : origin(origin), radius(radius){};
 
     void generate(ParticleData *particles, float dt, size_t start_id, size_t end_id) override;
 
-    ofVec3f origin;
+    ofVec3f *origin;
     float radius;
 };
 

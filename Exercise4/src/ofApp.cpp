@@ -5,6 +5,8 @@ void ofApp::setup()
     ofSetVerticalSync(true);
     ofSetCircleResolution(100);
 
+    time = ofGetCurrentTime();
+
     particle_system.addEmitter(std::make_shared<ExplosionEmitter>(
         500, ofVec3f(-50, 50, -50), 75, ofColor(0), ofColor(255)));
     particle_system.addEmitter(std::make_shared<ExplosionEmitter>(
@@ -27,6 +29,12 @@ void ofApp::setup()
 
 void ofApp::update()
 {
+    if (ofGetCurrentTime().getAsSeconds() - time.getAsSeconds() > 1.f)
+    {
+        time = ofGetCurrentTime();
+        for (size_t i = 0; i < 4; ++i)
+            particle_system.emitters[i]->origin = ofVec3f(ofRandom(-100, 100), ofRandom(50, 200), ofRandom(-100, 100));
+    }
     particle_system.update(float(ofGetLastFrameTime()));
 }
 
@@ -41,6 +49,6 @@ void ofApp::draw()
     camera.end();
 
     ofSetColor(255);
-    ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 20);
-    ofDrawBitmapString(ofToString(particle_system.particles.alive_count), 10, 40);
+    ofDrawBitmapString("FPS | " + ofToString(ofGetFrameRate()), 10, 20);
+    ofDrawBitmapString("Count | " + ofToString(particle_system.particles.alive_count), 10, 40);
 }

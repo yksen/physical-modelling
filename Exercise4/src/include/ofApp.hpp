@@ -12,6 +12,7 @@ public:
 	void update();
 	void draw();
 	
+	ofTime time;
 	ofEasyCam camera;
 	ParticleSystem particle_system{10000};
 };
