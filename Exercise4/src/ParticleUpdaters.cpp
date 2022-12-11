@@ -1,5 +1,12 @@
 #include "ParticleUpdaters.hpp"
 
+void GravityUpdater::update(ParticleData *particles, float dt)
+{
+    size_t end_id = particles->alive_count;
+    for (size_t i = 0; i < end_id; ++i)
+        particles->acceleration.at(i) += gravity * dt;
+}
+
 void EulerUpdater::update(ParticleData *particles, float dt)
 {
     size_t end_id = particles->alive_count;

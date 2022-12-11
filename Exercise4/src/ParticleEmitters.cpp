@@ -2,7 +2,7 @@
 
 namespace common
 {
-    auto time_generator = std::make_shared<TimeGenerator>(2, 4);
+    auto time_generator = std::make_shared<TimeGenerator>(5, 10);
     auto random_color_generator = std::make_shared<RandomColorGenerator>();
 }
 

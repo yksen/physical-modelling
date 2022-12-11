@@ -13,6 +13,7 @@ void ofApp::setup()
     particle_system.addEmitter(std::make_shared<ExplosionEmitter>(
         emit_rate, ofVec3f(100, 0, 0), explosion_power, ofColor(0, 0, 255), ofColor(0, 255, 255)));
 
+    particle_system.addUpdater(std::make_shared<GravityUpdater>());
     particle_system.addUpdater(std::make_shared<EulerUpdater>());
     particle_system.addUpdater(std::make_shared<TimeUpdater>());
 }
