@@ -1,4 +1,4 @@
-# Instrukcje do zadania
+# System cząsteczkowy
 
 1. Zaimplementuj system cząsteczkowy, tzw. particle system w 3D. Rozwiązanie powinno być obiektowe (klasy particle, emiter, generator itp.). Cząsteczki powinny mieć podstawowe atrybuty takie jak kolor, czas życia, właściwości fizyczne itp. Powinna istnieć możliwość nadania siły zewnętrznej (wiatr, przyciąganie) lub innej np. oddziaływanie między cząsteczkami. Powinni państwo uzyskać minimum 1000 cząsteczek na ekranie w płynnej animacji (czas rzeczywisty). Proszę uwzględnić kolizje cząsteczek z obiektem (może być sfera/koło).
 
