@@ -15,7 +15,7 @@ void ofApp::update()
 
 void ofApp::draw()
 {
-    ofDrawAxis(100);
+    ofBackground(ofColor::black);
 
     camera.begin();
     ofEnableDepthTest();
