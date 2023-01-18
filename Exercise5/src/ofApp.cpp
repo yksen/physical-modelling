@@ -4,9 +4,13 @@ void ofApp::setup()
 {
     camera.setDistance(100);
 
-    softBody.points.resize(2);
-    softBody.points[0].setPosition(0, 10.f, 0);
-    softBody.addSpring({0, 1}, 10.f);
+    const size_t pointsCount = 30;
+    float radius = 20.f;
+
+    for (size_t i = 0; i < pointsCount; ++i)
+        softBody.points.emplace_back(ofVec3f(radius * sin(i * 2 * PI / pointsCount), radius * cos(i * 2 * PI / pointsCount), 0.f));
+    for (size_t i = 0; i < pointsCount; ++i)
+        softBody.addSpring({i, (i + 1) % pointsCount}, 10.f);
 }
 
 void ofApp::update()

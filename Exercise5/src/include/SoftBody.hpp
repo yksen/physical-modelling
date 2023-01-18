@@ -3,7 +3,7 @@
 class Point : public ofNode
 {
 public:
-    Point() : ofNode(){};
+    Point(ofVec3f position) { setPosition(position); };
 
     void draw() { customDraw(); };
     void customDraw() override;
@@ -28,8 +28,6 @@ public:
 class SoftBody
 {
 public:
-    SoftBody(){};
-
     void draw();
     void addSpring(PointsPair links, float length);
     void addSpring(std::pair<size_t, size_t> indices, float length);
