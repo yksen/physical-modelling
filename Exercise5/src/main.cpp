@@ -1,8 +1,8 @@
 #include "ofMain.h"
 #include "ofApp.hpp"
 
-//========================================================================
-int main( ){
+int main()
+{
 
 	ofGLWindowSettings settings;
 	settings.windowMode = OF_GAME_MODE;
