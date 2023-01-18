@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "SoftBody.hpp"
 
 class ofApp : public ofBaseApp
 {
@@ -15,4 +16,5 @@ public:
 	void mouseReleased(int x, int y, int button);
 
 	ofEasyCam camera;
+	SoftBody softBody;
 };

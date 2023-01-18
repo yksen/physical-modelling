@@ -2,6 +2,11 @@
 
 void ofApp::setup()
 {
+    camera.setDistance(100);
+
+    softBody.points.resize(2);
+    softBody.points[0].setPosition(0, 10.f, 0);
+    softBody.addSpring({0, 1}, 10.f);
 }
 
 void ofApp::update()
@@ -10,8 +15,12 @@ void ofApp::update()
 
 void ofApp::draw()
 {
-    camera.begin();
     ofDrawAxis(100);
+
+    camera.begin();
+    ofEnableDepthTest();
+    softBody.draw();
+    ofDisableDepthTest();
     camera.end();
 
     ofDrawBitmapString(ofToString(ofGetFrameRate()), 0, 10);
