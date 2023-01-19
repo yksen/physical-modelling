@@ -1,20 +1,20 @@
 #include "SoftBody.hpp"
 
-void Point::customDraw()
+void Point::draw()
 {
     ofSetColor(ofColor::white);
-    ofDrawSphere(this->getPosition(), 1.f);
+    ofDrawSphere(this->position, 1.f);
 }
 
 void Spring::draw()
 {
     ofSetColor(ofColor::red);
-    ofDrawLine(links.first->getPosition(), links.second->getPosition());
+    ofDrawLine(links.first->position, links.second->position);
 }
 
 float Spring::getLength()
 {
-    return glm::distance(links.first->getPosition(), links.second->getPosition());
+    return links.first->position.distance(links.second->position);
 }
 
 void SoftBody::addSpring(PointsPair links)

@@ -1,13 +1,13 @@
 #include "ofMain.h"
 
-class Point : public ofNode
+class Point
 {
 public:
-    Point(ofVec3f position) { setPosition(position); };
+    Point(ofVec3f position) : position(position) {};
 
-    void draw() { customDraw(); };
-    void customDraw() override;
+    void draw();
 
+    ofVec3f position;
     ofVec3f velocity;
     ofVec3f force;
 };
