@@ -17,20 +17,20 @@ using PointsPair = std::pair<std::shared_ptr<Point>, std::shared_ptr<Point>>;
 class Spring
 {
 public:
-    Spring(PointsPair links, float length) : links(links), length(length){};
+    Spring(PointsPair links) : links(links){};
 
     void draw();
+    float getLength();
 
     PointsPair links;
-    float length;
 };
 
 class SoftBody
 {
 public:
     void draw();
-    void addSpring(PointsPair links, float length);
-    void addSpring(std::pair<size_t, size_t> indices, float length);
+    void addSpring(PointsPair links);
+    void addSpring(std::pair<size_t, size_t> indices);
 
     std::vector<Point> points;
     std::vector<Spring> springs;

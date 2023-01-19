@@ -12,14 +12,19 @@ void Spring::draw()
     ofDrawLine(links.first->getPosition(), links.second->getPosition());
 }
 
-void SoftBody::addSpring(PointsPair links, float length)
+float Spring::getLength()
 {
-    springs.push_back(Spring(links, length));
+    return glm::distance(links.first->getPosition(), links.second->getPosition());
 }
 
-void SoftBody::addSpring(std::pair<size_t, size_t> indices, float length)
+void SoftBody::addSpring(PointsPair links)
 {
-    addSpring(PointsPair(&points[indices.first], &points[indices.second]), length);
+    springs.emplace_back(links);
+}
+
+void SoftBody::addSpring(std::pair<size_t, size_t> indices)
+{
+    addSpring(PointsPair(&points[indices.first], &points[indices.second]));
 }
 
 void SoftBody::draw()

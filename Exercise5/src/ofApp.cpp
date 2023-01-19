@@ -10,7 +10,7 @@ void ofApp::setup()
     for (size_t i = 0; i < pointsCount; ++i)
         softBody.points.emplace_back(ofVec3f(radius * sin(i * 2 * PI / pointsCount), radius * cos(i * 2 * PI / pointsCount), 0.f));
     for (size_t i = 0; i < pointsCount; ++i)
-        softBody.addSpring({i, (i + 1) % pointsCount}, 10.f);
+        softBody.addSpring({i, (i + 1) % pointsCount});
 }
 
 void ofApp::update()
