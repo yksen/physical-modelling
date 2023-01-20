@@ -6,6 +6,32 @@ void Point::draw()
     ofDrawSphere(this->position, 1.f);
 }
 
+void Point::update(float dt)
+{
+    applyGravity();
+
+    ofVec3f acceleration = this->force / this->mass;
+    this->velocity += acceleration * dt;
+    this->position += this->velocity * dt;
+    this->force = ofVec3f(0.f, 0.f, 0.f);
+
+    checkFloorCollision();
+}
+
+void Point::applyGravity()
+{
+    this->force += gravity * this->mass;
+}
+
+void Point::checkFloorCollision()
+{
+    if (this->position.y < 0.f)
+    {
+        this->position.y = 0.f;
+        this->velocity.y = 0.f;
+    }
+}
+
 void Spring::draw()
 {
     ofSetColor(ofColor::red);
@@ -15,6 +41,12 @@ void Spring::draw()
 float Spring::getLength()
 {
     return links.first->position.distance(links.second->position);
+}
+
+void SoftBody::update(float dt)
+{
+    for (auto &point : points)
+        point.update(dt);
 }
 
 void SoftBody::addSpring(PointsPair links)
