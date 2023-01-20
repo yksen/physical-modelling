@@ -26,8 +26,9 @@ public:
     Spring(PointsPair links) : links(links){};
 
     void draw();
-    float getLength();
-
+    void update();
+    
+    float length{1.f};
     PointsPair links;
 };
 
