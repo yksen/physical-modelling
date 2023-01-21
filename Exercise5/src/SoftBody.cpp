@@ -43,7 +43,7 @@ void Spring::update()
     ofVec3f direction = links.first->position - links.second->position;
     float distance = direction.length();
     
-    ofVec3f restoringForce = (distance - length) * 1.f + (links.first->velocity - links.second->velocity) * direction.getNormalized() * 1.f;
+    ofVec3f restoringForce = direction.getNormalized() * ((distance - length) * 1.f + (links.first->velocity - links.second->velocity) * 1.f);
 
     links.first->force -= restoringForce;
     links.second->force += restoringForce;
@@ -53,6 +53,7 @@ void SoftBody::update(float dt)
 {
     for (auto &spring : springs)
         spring.update();
+
     for (auto &point : points)
         point.update(dt);
 }
