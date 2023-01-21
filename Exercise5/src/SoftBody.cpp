@@ -9,18 +9,25 @@ void Point::draw()
 void Point::update(float dt)
 {
     applyGravity();
+    updateVerlet(dt);
+    checkFloorCollision();
 
     ofVec3f acceleration = this->force / this->mass;
     this->velocity += acceleration * dt;
-    this->position += this->velocity * dt;
-    this->force = ofVec3f(0.f, 0.f, 0.f);
 
-    checkFloorCollision();
+    this->force = ofVec3f(0, 0, 0);
 }
 
 void Point::applyGravity()
 {
     this->force += gravity * this->mass;
+}
+
+void Point::updateVerlet(float dt)
+{
+    ofVec3f temp = this->position;
+    this->position = 2 * this->position - this->oldPosition + dt * dt * this->force / this->mass;
+    this->oldPosition = temp;
 }
 
 void Point::checkFloorCollision()
@@ -42,7 +49,7 @@ void Spring::update()
 {
     ofVec3f direction = links.first->position - links.second->position;
     float distance = direction.length();
-    
+
     ofVec3f restoringForce = direction.getNormalized() * ((distance - length) * 1.f + (links.first->velocity - links.second->velocity) * 1.f);
 
     links.first->force -= restoringForce;
