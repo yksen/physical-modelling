@@ -2,6 +2,12 @@
 
 void ofApp::setup()
 {
+    gui.setup();
+    gui.add(fpsLabel.setup("FPS", "0"));
+    gui.add(dampingSlider.setup("Damping", 30.f, 0.f, 50.f));
+    gui.add(pressureSlider.setup("Pressure", 1000.f, 0.f, 10000.f));
+    gui.add(elasticitySlider.setup("Elasticity", 1000.f, 0.f, 10000.f));
+
     camera.setDistance(100);
 
     const size_t pointsCount = 30;
@@ -15,7 +21,12 @@ void ofApp::setup()
 
 void ofApp::update()
 {
+    damping = dampingSlider;
+    pressure = pressureSlider;
+    elasticity = elasticitySlider;
+    
     softBody.update(ofGetLastFrameTime());
+    fpsLabel = ofToString(ofGetFrameRate());
 }
 
 void ofApp::draw()
@@ -28,7 +39,7 @@ void ofApp::draw()
     ofDisableDepthTest();
     camera.end();
 
-    ofDrawBitmapString(ofToString(ofGetFrameRate()), 0, 10);
+    gui.draw();
 }
 
 void ofApp::keyPressed(int key)

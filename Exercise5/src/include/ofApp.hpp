@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxGui.h"
 #include "SoftBody.hpp"
 
 class ofApp : public ofBaseApp
@@ -17,4 +18,10 @@ public:
 
 	ofEasyCam camera;
 	SoftBody softBody;
+	
+	ofxPanel gui;
+	ofxLabel fpsLabel;
+	ofxFloatSlider dampingSlider;
+	ofxFloatSlider pressureSlider;
+	ofxFloatSlider elasticitySlider;
 };

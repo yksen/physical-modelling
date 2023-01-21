@@ -1,6 +1,10 @@
 #include "ofMain.h"
+#include "ofxGui.h"
 
 static const ofVec3f gravity{0.f, -9.81f, 0.f};
+static float damping{30.f};
+static float elasticity{1000.f};
+static float pressure{1000.f};
 
 class Point
 {
