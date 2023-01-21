@@ -9,12 +9,8 @@ void Point::draw()
 void Point::update(float dt)
 {
     applyGravity();
-    updateVerlet(dt);
-    checkFloorCollision();
-
-    ofVec3f acceleration = this->force / this->mass;
-    this->velocity += acceleration * dt;
-
+    if (!this->isFixed)
+        updateEuler(dt);
     this->force = ofVec3f(0, 0, 0);
 }
 
@@ -23,10 +19,17 @@ void Point::applyGravity()
     this->force += gravity * this->mass;
 }
 
+void Point::updateEuler(float dt)
+{
+    ofVec3f acceleration = this->force / this->mass;
+    this->velocity += acceleration * dt;
+    this->position += this->velocity * dt;
+}
+
 void Point::updateVerlet(float dt)
 {
     ofVec3f temp = this->position;
-    this->position = 2 * this->position - this->oldPosition + dt * dt * this->force / this->mass;
+    this->position += (this->position - this->oldPosition) + this->force / this->mass * dt * dt;
     this->oldPosition = temp;
 }
 
@@ -45,21 +48,40 @@ void Spring::draw()
     ofDrawLine(links.first->position, links.second->position);
 }
 
-void Spring::update()
+void Spring::update(float volume)
 {
-    ofVec3f direction = links.first->position - links.second->position;
-    float distance = direction.length();
+    direction = links.first->position - links.second->position;
+    distance = direction.length();
+    applyRestoringForce();
+}
 
-    ofVec3f restoringForce = direction.getNormalized() * ((distance - length) * 1.f + (links.first->velocity - links.second->velocity) * 1.f);
+void Spring::applyRestoringForce()
+{
+    ofVec3f velocityDelta = links.first->velocity - links.second->velocity;
+
+    ofVec3f restoringForce = (distance - length) * elasticity + velocityDelta * direction * damping / distance;
+    restoringForce *= direction.getNormalized();
 
     links.first->force -= restoringForce;
     links.second->force += restoringForce;
 }
 
-void SoftBody::update(float dt)
+
+void SoftBody::draw()
 {
     for (auto &spring : springs)
-        spring.update();
+        spring.draw();
+
+    for (auto &point : points)
+        point.draw();
+}
+
+void SoftBody::update(float dt)
+{
+    float volume = getVolume();
+
+    for (auto &spring : springs)
+        spring.update(volume);
 
     for (auto &point : points)
         point.update(dt);
@@ -75,11 +97,12 @@ void SoftBody::addSpring(std::pair<size_t, size_t> indices)
     addSpring(PointsPair(&points[indices.first], &points[indices.second]));
 }
 
-void SoftBody::draw()
+float SoftBody::getVolume()
 {
-    for (auto &spring : springs)
-        spring.draw();
+    float volume = 1.f;
 
-    for (auto &point : points)
-        point.draw();
+    for (auto &spring : springs)
+        volume += spring.distance * spring.distance;
+
+    return volume;
 }
