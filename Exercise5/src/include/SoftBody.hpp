@@ -2,9 +2,6 @@
 #include "ofxGui.h"
 
 static const ofVec3f gravity{0.f, -9.81f, 0.f};
-static float damping{30.f};
-static float elasticity{1000.f};
-static float pressure{1000.f};
 
 class Point
 {
@@ -31,11 +28,16 @@ using PointsPair = std::pair<std::shared_ptr<Point>, std::shared_ptr<Point>>;
 class Spring
 {
 public:
-    Spring(PointsPair links) : links(links){};
+    Spring(PointsPair links) : links(links), length(links.first->position.distance(links.second->position)){};
 
     void draw();
     void update(float volume);
     void applyRestoringForce();
+    void applyPressure(float volume);
+
+    static float damping;
+    static float elasticity;
+    static float pressure;
 
     PointsPair links;
     ofVec3f direction;

@@ -2,31 +2,30 @@
 
 void ofApp::setup()
 {
+    ofSetFrameRate(144);
+    camera.setDistance(100);
+
     gui.setup();
     gui.add(fpsLabel.setup("FPS", "0"));
     gui.add(dampingSlider.setup("Damping", 30.f, 0.f, 50.f));
-    gui.add(pressureSlider.setup("Pressure", 1000.f, 0.f, 10000.f));
     gui.add(elasticitySlider.setup("Elasticity", 1000.f, 0.f, 10000.f));
+    gui.add(pressureSlider.setup("Pressure", 10000.f, 1000.f, 100000.f));
 
-    camera.setDistance(100);
-
-    const size_t pointsCount = 20;
+    size_t pointCount = 20;
     float radius = 20.f;
 
-    for (size_t i = 0; i < pointsCount; ++i)
-        softBody.points.emplace_back(ofVec3f(radius * sin(i * 2 * PI / pointsCount), radius + radius * cos(i * 2 * PI / pointsCount), 0.f));
-    for (size_t i = 0; i < pointsCount; ++i)
-        softBody.addSpring({i, (i + 1) % pointsCount});
-
-    softBody.points.front().isFixed = true;
+    for (size_t i = 0; i < pointCount; ++i)
+        softBody.points.emplace_back(ofVec3f(radius * sin(i * 2 * PI / pointCount), radius + radius * cos(i * 2 * PI / pointCount), 0.f));
+    for (size_t i = 0; i < pointCount; ++i)
+        softBody.addSpring({i, (i + 1) % pointCount});
 }
 
 void ofApp::update()
 {
-    damping = dampingSlider;
-    pressure = pressureSlider;
-    elasticity = elasticitySlider;
-    
+    Spring::damping = dampingSlider;
+    Spring::elasticity = elasticitySlider;
+    Spring::pressure = pressureSlider;
+
     softBody.update(ofGetLastFrameTime());
     fpsLabel = ofToString(ofGetFrameRate());
 }
