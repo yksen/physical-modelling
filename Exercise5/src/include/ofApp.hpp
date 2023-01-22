@@ -20,6 +20,7 @@ public:
 	
 	ofxPanel gui;
 	ofxLabel fpsLabel;
+	ofxFloatSlider deltaTimeSlider;
 	ofxToggle integrationMethodToggle;
 	ofxFloatSlider dampingSlider;
 	ofxFloatSlider pressureSlider;

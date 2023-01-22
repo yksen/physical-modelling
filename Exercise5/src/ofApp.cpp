@@ -7,10 +7,11 @@ void ofApp::setup()
 
     gui.setup();
     gui.add(fpsLabel.setup("FPS", "0"));
+    gui.add(deltaTimeSlider.setup("Delta Time", 0.001f, 0.0001f, 0.01f));
     gui.add(integrationMethodToggle.setup("Verlet/Euler", false));
     gui.add(dampingSlider.setup("Damping", 30.f, 0.f, 50.f));
-    gui.add(elasticitySlider.setup("Elasticity", 1000.f, 0.f, 10000.f));
-    gui.add(pressureSlider.setup("Pressure", 10000.f, 1000.f, 100000.f));
+    gui.add(elasticitySlider.setup("Elasticity", 1000.f, 100.f, 5000.f));
+    gui.add(pressureSlider.setup("Pressure", 10000.f, 100.f, 100000.f));
 
     integrationMethodToggle.addListener(this, &ofApp::onIntegrationMethodChange);
 
@@ -29,7 +30,7 @@ void ofApp::update()
     Spring::elasticity = elasticitySlider;
     Spring::pressure = pressureSlider;
 
-    softBody.update(ofGetLastFrameTime());
+    softBody.update(deltaTimeSlider);
     fpsLabel = ofToString(ofGetFrameRate());
 }
 
