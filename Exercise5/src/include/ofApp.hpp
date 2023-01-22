@@ -6,6 +6,9 @@ class ofApp : public ofBaseApp
 {
 public:
 	void setup();
+	void setupGui();
+	void initializeCircle();
+	void initializeSphere();
 	void update();
 	void draw();
 

@@ -4,17 +4,26 @@ void ofApp::setup()
 {
     ofSetFrameRate(144);
     camera.setDistance(100);
+    setupGui();
 
+    initializeCircle();
+}
+
+void ofApp::setupGui()
+{
     gui.setup();
     gui.add(fpsLabel.setup("FPS", "0"));
-    gui.add(deltaTimeSlider.setup("Delta Time", 0.001f, 0.0001f, 0.01f));
+    gui.add(deltaTimeSlider.setup("Delta Time", 1e-3f, 1e-4f, 1e-2f));
     gui.add(integrationMethodToggle.setup("Verlet/Euler", false));
     gui.add(dampingSlider.setup("Damping", 30.f, 0.f, 50.f));
     gui.add(elasticitySlider.setup("Elasticity", 1000.f, 100.f, 5000.f));
-    gui.add(pressureSlider.setup("Pressure", 10000.f, 100.f, 100000.f));
+    gui.add(pressureSlider.setup("Pressure", 1e4f, 1e2f, 1e5f));
 
     integrationMethodToggle.addListener(this, &ofApp::onIntegrationMethodChange);
+}
 
+void ofApp::initializeCircle()
+{
     size_t pointCount = 20;
     float radius = 20.f;
 
