@@ -13,7 +13,6 @@ void Point::update(float dt)
     applyGravity();
     if (!this->isFixed)
         integrate(this, dt);
-    checkFloorCollision();
     this->force = ofVec3f(0, 0, 0);
 }
 
@@ -39,7 +38,7 @@ void Point::integrateVerlet(float dt)
     this->oldPosition = temp;
 }
 
-void Point::checkFloorCollision()
+void Point::applyFloorCollision()
 {
     if (this->position.y < 0.f)
     {
@@ -51,6 +50,7 @@ void Point::checkFloorCollision()
 float Spring::damping = 30.f;
 float Spring::elasticity = 1000.f;
 float Spring::pressure = 10000.f;
+bool Spring::pressureEnabled = true;
 
 void Spring::draw()
 {
@@ -63,7 +63,8 @@ void Spring::update(float volume)
     direction = links.first->position - links.second->position;
     distance = direction.length();
     applyRestoringForce();
-    applyPressure(volume);
+    if (pressureEnabled)
+        applyPressure(volume);
 }
 
 void Spring::applyRestoringForce()
@@ -124,4 +125,10 @@ float SoftBody::getVolume()
         volume += spring.distance * spring.distance;
 
     return volume;
+}
+
+void SoftBody::collideWithFloor()
+{
+    for (auto &point : points)
+        point.applyFloorCollision();
 }

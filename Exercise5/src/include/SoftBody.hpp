@@ -13,7 +13,7 @@ public:
     void applyGravity();
     void integrateEuler(float dt);
     void integrateVerlet(float dt);
-    void checkFloorCollision();
+    void applyFloorCollision();
 
     static std::function<void(Point *, float)> integrate;
     bool isFixed{false};
@@ -39,6 +39,7 @@ public:
     static float damping;
     static float elasticity;
     static float pressure;
+    static bool pressureEnabled;
 
     PointsPair links;
     ofVec3f direction;
@@ -54,6 +55,7 @@ public:
     void addSpring(PointsPair links);
     void addSpring(std::pair<size_t, size_t> indices);
     float getVolume();
+    void collideWithFloor();
 
     std::vector<Point> points;
     std::vector<Spring> springs;

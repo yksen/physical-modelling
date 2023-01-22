@@ -8,7 +8,7 @@ public:
 	void setup();
 	void setupGui();
 	void initializeCircle();
-	void initializeSphere();
+	void initializeRope();
 	void update();
 	void draw();
 
@@ -20,11 +20,13 @@ public:
 
 	ofEasyCam camera;
 	SoftBody softBody;
-	
+	bool floorCollisionEnabled{true};
+	bool pressureEnabled{true};
+
 	ofxPanel gui;
 	ofxLabel fpsLabel;
-	ofxFloatSlider deltaTimeSlider;
 	ofxToggle integrationMethodToggle;
+	ofxFloatSlider deltaTimeSlider;
 	ofxFloatSlider dampingSlider;
 	ofxFloatSlider pressureSlider;
 	ofxFloatSlider elasticitySlider;
