@@ -3,11 +3,12 @@
 void ofApp::setup()
 {
     ofSetFrameRate(144);
-    camera.setDistance(100);
+    camera.setTarget({0, 0, 0});
+    camera.setDistance(100.f);
+    camera.disableMouseInput();
     setupGui();
 
-    // initializeCircle();
-    initializeRope();
+    initializeCircle();
 }
 
 void ofApp::setupGui()
@@ -59,6 +60,9 @@ void ofApp::update()
     softBody.update(deltaTimeSlider);
     if (floorCollisionEnabled)
         softBody.collideWithFloor();
+
+    camera.setTarget(softBody.getAveragePosition());
+    camera.setPosition(softBody.getAveragePosition() + ofVec3f(0.f, 0.f, 100.f));
 
     fpsLabel = ofToString(ofGetFrameRate());
 }

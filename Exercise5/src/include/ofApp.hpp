@@ -20,6 +20,7 @@ public:
 
 	ofEasyCam camera;
 	SoftBody softBody;
+	bool enableGui{true};
 	bool floorCollisionEnabled{true};
 	bool pressureEnabled{true};
 

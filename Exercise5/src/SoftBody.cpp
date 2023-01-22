@@ -117,6 +117,12 @@ void SoftBody::addSpring(std::pair<size_t, size_t> indices)
     addSpring(PointsPair(&points[indices.first], &points[indices.second]));
 }
 
+void SoftBody::collideWithFloor()
+{
+    for (auto &point : points)
+        point.applyFloorCollision();
+}
+
 float SoftBody::getVolume()
 {
     float volume = 1.f;
@@ -127,8 +133,12 @@ float SoftBody::getVolume()
     return volume;
 }
 
-void SoftBody::collideWithFloor()
+ofVec3f SoftBody::getAveragePosition()
 {
+    ofVec3f averagePosition = ofVec3f(0, 0, 0);
+
     for (auto &point : points)
-        point.applyFloorCollision();
+        averagePosition += point.position;
+
+    return averagePosition / points.size();
 }

@@ -54,8 +54,9 @@ public:
     void update(float dt);
     void addSpring(PointsPair links);
     void addSpring(std::pair<size_t, size_t> indices);
-    float getVolume();
     void collideWithFloor();
+    float getVolume();
+    ofVec3f getAveragePosition();
 
     std::vector<Point> points;
     std::vector<Spring> springs;
