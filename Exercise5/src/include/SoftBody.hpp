@@ -11,10 +11,11 @@ public:
     void draw();
     void update(float dt);
     void applyGravity();
-    void updateEuler(float dt);
-    void updateVerlet(float dt);
+    void integrateEuler(float dt);
+    void integrateVerlet(float dt);
     void checkFloorCollision();
 
+    static std::function<void(Point *, float)> integrate;
     bool isFixed{false};
     float mass{1.f};
     ofVec3f oldPosition;

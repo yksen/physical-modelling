@@ -1,5 +1,7 @@
 #include "SoftBody.hpp"
 
+std::function<void(Point *, float)> Point::integrate = &Point::integrateVerlet;
+
 void Point::draw()
 {
     ofSetColor(ofColor::white);
@@ -10,8 +12,7 @@ void Point::update(float dt)
 {
     applyGravity();
     if (!this->isFixed)
-        updateVerlet(dt);
-    // updateEuler(dt);
+        integrate(this, dt);
     checkFloorCollision();
     this->force = ofVec3f(0, 0, 0);
 }
@@ -21,14 +22,15 @@ void Point::applyGravity()
     this->force += gravity * this->mass;
 }
 
-void Point::updateEuler(float dt)
+void Point::integrateEuler(float dt)
 {
     ofVec3f acceleration = this->force / this->mass;
     this->velocity += acceleration * dt;
+    this->oldPosition = this->position;
     this->position += this->velocity * dt;
 }
 
-void Point::updateVerlet(float dt)
+void Point::integrateVerlet(float dt)
 {
     ofVec3f acceleration = this->force / this->mass;
     ofVec3f temp = this->position;

@@ -7,9 +7,12 @@ void ofApp::setup()
 
     gui.setup();
     gui.add(fpsLabel.setup("FPS", "0"));
+    gui.add(integrationMethodToggle.setup("Verlet/Euler", false));
     gui.add(dampingSlider.setup("Damping", 30.f, 0.f, 50.f));
     gui.add(elasticitySlider.setup("Elasticity", 1000.f, 0.f, 10000.f));
     gui.add(pressureSlider.setup("Pressure", 10000.f, 1000.f, 100000.f));
+
+    integrationMethodToggle.addListener(this, &ofApp::onIntegrationMethodChange);
 
     size_t pointCount = 20;
     float radius = 20.f;
@@ -41,6 +44,14 @@ void ofApp::draw()
     camera.end();
 
     gui.draw();
+}
+
+void ofApp::onIntegrationMethodChange(bool &value)
+{
+    if (value)
+        Point::integrate = &Point::integrateEuler;
+    else
+        Point::integrate = &Point::integrateVerlet;
 }
 
 void ofApp::keyPressed(int key)

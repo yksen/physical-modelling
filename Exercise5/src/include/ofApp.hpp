@@ -9,6 +9,7 @@ public:
 	void update();
 	void draw();
 
+	void onIntegrationMethodChange(bool &value);
 	void keyPressed(int key);
 	void keyReleased(int key);
 	void mousePressed(int x, int y, int button);
@@ -19,6 +20,7 @@ public:
 	
 	ofxPanel gui;
 	ofxLabel fpsLabel;
+	ofxToggle integrationMethodToggle;
 	ofxFloatSlider dampingSlider;
 	ofxFloatSlider pressureSlider;
 	ofxFloatSlider elasticitySlider;
