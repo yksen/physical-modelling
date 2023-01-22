@@ -10,7 +10,8 @@ void Point::update(float dt)
 {
     applyGravity();
     if (!this->isFixed)
-        updateEuler(dt);
+        updateVerlet(dt);
+    // updateEuler(dt);
     checkFloorCollision();
     this->force = ofVec3f(0, 0, 0);
 }
@@ -29,8 +30,10 @@ void Point::updateEuler(float dt)
 
 void Point::updateVerlet(float dt)
 {
+    ofVec3f acceleration = this->force / this->mass;
     ofVec3f temp = this->position;
-    this->position += (this->position - this->oldPosition) + this->force / this->mass * dt * dt;
+    this->position = (2 * this->position - this->oldPosition) + dt * dt * acceleration;
+    this->velocity = (this->position - this->oldPosition) / (2 * dt);
     this->oldPosition = temp;
 }
 
