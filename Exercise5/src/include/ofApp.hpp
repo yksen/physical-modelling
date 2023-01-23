@@ -19,7 +19,12 @@ public:
 	void mouseReleased(int x, int y, int button);
 
 	ofEasyCam camera;
+	float cameraDistance{200.f};
+
 	SoftBody softBody;
+	std::vector<ofVec3f> points;
+	
+	bool isMousePressed{false};
 	bool enableGui{true};
 	bool floorCollisionEnabled{true};
 	bool pressureEnabled{true};
@@ -31,4 +36,5 @@ public:
 	ofxFloatSlider dampingSlider;
 	ofxFloatSlider pressureSlider;
 	ofxFloatSlider elasticitySlider;
+	ofxLabel debugLabel;
 };

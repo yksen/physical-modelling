@@ -3,9 +3,11 @@
 void ofApp::setup()
 {
     ofSetFrameRate(144);
+
     camera.setTarget({0, 0, 0});
-    camera.setDistance(100.f);
+    camera.setDistance(cameraDistance);
     camera.disableMouseInput();
+
     setupGui();
 
     initializeCircle();
@@ -20,6 +22,7 @@ void ofApp::setupGui()
     gui.add(dampingSlider.setup("Damping", 30.f, 0.f, 50.f));
     gui.add(elasticitySlider.setup("Elasticity", 1000.f, 100.f, 5000.f));
     gui.add(pressureSlider.setup("Pressure", 1e4f, 1e2f, 1e5f));
+    gui.add(debugLabel.setup("Debug", "0"));
 
     integrationMethodToggle.addListener(this, &ofApp::onIntegrationMethodChange);
 }
@@ -61,8 +64,17 @@ void ofApp::update()
     if (floorCollisionEnabled)
         softBody.collideWithFloor();
 
-    camera.setTarget(softBody.getAveragePosition());
-    camera.setPosition(softBody.getAveragePosition() + ofVec3f(0.f, 0.f, 100.f));
+    ofVec3f softBodyCenter = softBody.getAveragePosition();
+    camera.setTarget(softBodyCenter);
+    camera.setPosition(softBodyCenter + ofVec3f(0.f, 0.f, cameraDistance));
+
+    if (isMousePressed)
+    {
+        auto worldPosition = camera.screenToWorld({ofGetMouseX(), ofGetMouseY(), 0.908378f});
+        points.emplace(points.begin(), worldPosition);
+        if (points.size() > 100)
+            points.pop_back();
+    }
 
     fpsLabel = ofToString(ofGetFrameRate());
 }
@@ -74,6 +86,9 @@ void ofApp::draw()
     camera.begin();
     ofEnableDepthTest();
     softBody.draw();
+    ofSetColor(ofColor::blue);
+    for (auto &point : points)
+        ofDrawSphere(point, 1.f);
     ofDisableDepthTest();
     camera.end();
 
@@ -91,12 +106,20 @@ void ofApp::keyPressed(int key)
 
 void ofApp::keyReleased(int key)
 {
+    switch (key)
+    {
+    case OF_KEY_ESC:
+        ofExit();
+        break;
+    }
 }
 
 void ofApp::mousePressed(int x, int y, int button)
 {
+    isMousePressed = true;
 }
 
 void ofApp::mouseReleased(int x, int y, int button)
 {
+    isMousePressed = false;
 }
