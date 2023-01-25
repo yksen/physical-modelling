@@ -85,10 +85,10 @@ void ofApp::draw()
 
     camera.begin();
     ofEnableDepthTest();
+    
     softBody.draw();
-    ofSetColor(ofColor::blue);
-    for (auto &point : points)
-        ofDrawSphere(point, 1.f);
+    ofDrawGrid(100.f, 100, false, false, false, true);
+
     ofDisableDepthTest();
     camera.end();
 
