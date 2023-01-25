@@ -23,6 +23,8 @@ public:
 
 	SoftBody softBody;
 	std::vector<ofVec3f> points;
+
+	ofVec2f mouseDelta;
 	
 	bool isMousePressed{false};
 	bool enableGui{true};

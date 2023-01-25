@@ -18,7 +18,7 @@ void ofApp::setupGui()
     gui.setup();
     gui.add(fpsLabel.setup("FPS", "0"));
     gui.add(integrationMethodToggle.setup("Verlet/Euler", false));
-    gui.add(deltaTimeSlider.setup("Delta Time", 1e-3f, 1e-4f, 1e-2f));
+    gui.add(deltaTimeSlider.setup("Delta Time", 1e-2f, 1e-4f, 1e-2f));
     gui.add(dampingSlider.setup("Damping", 30.f, 0.f, 50.f));
     gui.add(elasticitySlider.setup("Elasticity", 1000.f, 100.f, 5000.f));
     gui.add(pressureSlider.setup("Pressure", 1e4f, 1e2f, 1e5f));
@@ -68,14 +68,6 @@ void ofApp::update()
     camera.setTarget(softBodyCenter);
     camera.setPosition(softBodyCenter + ofVec3f(0.f, 0.f, cameraDistance));
 
-    if (isMousePressed)
-    {
-        auto worldPosition = camera.screenToWorld({ofGetMouseX(), ofGetMouseY(), 0.908378f});
-        points.emplace(points.begin(), worldPosition);
-        if (points.size() > 100)
-            points.pop_back();
-    }
-
     fpsLabel = ofToString(ofGetFrameRate());
 }
 
@@ -117,9 +109,14 @@ void ofApp::keyReleased(int key)
 void ofApp::mousePressed(int x, int y, int button)
 {
     isMousePressed = true;
+    mouseDelta = ofVec3f(x, y, 0.f);
 }
 
 void ofApp::mouseReleased(int x, int y, int button)
 {
     isMousePressed = false;
+    mouseDelta -= ofVec3f(x, y, 0.f);
+
+    for (auto &point : softBody.points)
+        point.force += ofVec3f(mouseDelta.x, -mouseDelta.y, 0.f) * 10.f;
 }
