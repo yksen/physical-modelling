@@ -13,7 +13,7 @@ public:
     void applyGravity();
     void integrateEuler(float dt);
     void integrateVerlet(float dt);
-    void applyFloorCollision();
+    void checkFloorCollision();
 
     static std::function<void(Point *, float)> integrate;
     bool isFixed{false};

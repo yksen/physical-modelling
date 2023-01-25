@@ -38,7 +38,7 @@ void Point::integrateVerlet(float dt)
     this->oldPosition = temp;
 }
 
-void Point::applyFloorCollision()
+void Point::checkFloorCollision()
 {
     if (this->position.y < 0.f)
     {
@@ -120,7 +120,8 @@ void SoftBody::addSpring(std::pair<size_t, size_t> indices)
 void SoftBody::collideWithFloor()
 {
     for (auto &point : points)
-        point.applyFloorCollision();
+        point.checkFloorCollision();
+        
 }
 
 float SoftBody::getVolume()

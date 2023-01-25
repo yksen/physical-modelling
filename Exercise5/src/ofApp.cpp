@@ -21,7 +21,7 @@ void ofApp::setupGui()
     gui.add(deltaTimeSlider.setup("Delta Time", 1e-2f, 1e-4f, 1e-2f));
     gui.add(dampingSlider.setup("Damping", 30.f, 0.f, 50.f));
     gui.add(elasticitySlider.setup("Elasticity", 1000.f, 100.f, 5000.f));
-    gui.add(pressureSlider.setup("Pressure", 1e4f, 1e2f, 1e5f));
+    gui.add(pressureSlider.setup("Pressure", 1e3f, 1e2f, 1e5f));
     gui.add(debugLabel.setup("Debug", "0"));
 
     integrationMethodToggle.addListener(this, &ofApp::onIntegrationMethodChange);
