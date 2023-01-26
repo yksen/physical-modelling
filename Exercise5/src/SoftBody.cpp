@@ -38,13 +38,10 @@ void Point::integrateVerlet(float dt)
     this->oldPosition = temp;
 }
 
-void Point::checkFloorCollision()
+void Point::checkBoxCollision()
 {
-    if (this->position.y < 0.f)
-    {
-        this->position.y = 0.f;
-        this->velocity.y = 0.f;
-    }
+    this->position.x = ofClamp(this->position.x, -500.f, 500.f);
+    this->position.y = ofClamp(this->position.y, -500.f, 500.f);
 }
 
 float Spring::damping = 30.f;
@@ -117,11 +114,10 @@ void SoftBody::addSpring(std::pair<size_t, size_t> indices)
     addSpring(PointsPair(&points[indices.first], &points[indices.second]));
 }
 
-void SoftBody::collideWithFloor()
+void SoftBody::collideWithBox()
 {
     for (auto &point : points)
-        point.checkFloorCollision();
-        
+        point.checkBoxCollision();
 }
 
 float SoftBody::getVolume()

@@ -13,7 +13,7 @@ public:
     void applyGravity();
     void integrateEuler(float dt);
     void integrateVerlet(float dt);
-    void checkFloorCollision();
+    void checkBoxCollision();
 
     static std::function<void(Point *, float)> integrate;
     bool isFixed{false};
@@ -55,7 +55,7 @@ public:
     void update(float dt);
     void addSpring(PointsPair links);
     void addSpring(std::pair<size_t, size_t> indices);
-    void collideWithFloor();
+    void collideWithBox();
     float getVolume();
     ofVec3f getAveragePosition();
 

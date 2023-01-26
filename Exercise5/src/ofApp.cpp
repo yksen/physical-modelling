@@ -2,6 +2,7 @@
 
 void ofApp::setup()
 {
+    ofSetVerticalSync(true);
     ofSetFrameRate(144);
 
     camera.setTarget({0, 0, 0});
@@ -19,9 +20,9 @@ void ofApp::setupGui()
     gui.add(fpsLabel.setup("FPS", "0"));
     gui.add(integrationMethodToggle.setup("Verlet/Euler", false));
     gui.add(deltaTimeSlider.setup("Delta Time", 1e-2f, 1e-4f, 1e-2f));
-    gui.add(dampingSlider.setup("Damping", 30.f, 0.f, 50.f));
-    gui.add(elasticitySlider.setup("Elasticity", 1000.f, 100.f, 5000.f));
-    gui.add(pressureSlider.setup("Pressure", 1e3f, 1e2f, 1e5f));
+    gui.add(dampingSlider.setup("Damping", 20.f, 0.f, 30.f));
+    gui.add(elasticitySlider.setup("Elasticity", 500.f, 100.f, 5000.f));
+    gui.add(pressureSlider.setup("Pressure", 1e4f, 1e2f, 1e5f));
     gui.add(debugLabel.setup("Debug", "0"));
 
     integrationMethodToggle.addListener(this, &ofApp::onIntegrationMethodChange);
@@ -49,7 +50,7 @@ void ofApp::initializeRope()
         softBody.addSpring({i, i + 1});
 
     softBody.points.front().isFixed = true;
-    floorCollisionEnabled = false;
+    boxCollisionEnabled = false;
     pressureEnabled = false;
 }
 
@@ -67,8 +68,8 @@ void ofApp::update()
     }
 
     softBody.update(deltaTimeSlider);
-    if (floorCollisionEnabled)
-        softBody.collideWithFloor();
+    if (boxCollisionEnabled)
+        softBody.collideWithBox();
 
     ofVec3f softBodyCenter = softBody.getAveragePosition();
     camera.setTarget(softBodyCenter);
@@ -85,7 +86,7 @@ void ofApp::draw()
     ofEnableDepthTest();
 
     softBody.draw();
-    ofDrawGrid(100.f, 100, false, false, false, true);
+    ofDrawGrid(100.f, 5, false, false, false, true);
 
     ofDisableDepthTest();
     camera.end();
