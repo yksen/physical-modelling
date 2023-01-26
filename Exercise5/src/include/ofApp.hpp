@@ -17,7 +17,7 @@ public:
 	void keyReleased(int key);
 	void mousePressed(int x, int y, int button);
 	void mouseReleased(int x, int y, int button);
-
+	
 	ofEasyCam camera;
 	float cameraDistance{200.f};
 	float screenToWorldScale{0.908378f};

@@ -119,10 +119,7 @@ void ofApp::mousePressed(int x, int y, int button)
 
     for (auto &point : softBody.points)
         if (point.position.distance(camera.screenToWorld({x, y, screenToWorldScale})) < clickAndDragRange)
-        {
             draggedPoint = &point;
-            draggedPoint->isFixed = true;
-        }
 }
 
 void ofApp::mouseReleased(int x, int y, int button)
@@ -131,13 +128,8 @@ void ofApp::mouseReleased(int x, int y, int button)
     mouseDelta -= ofVec3f(x, y, 0.f);
 
     if (draggedPoint != nullptr)
-    {
-        draggedPoint->isFixed = false;
         draggedPoint = nullptr;
-    }
     else
-    {
         for (auto &point : softBody.points)
             point.force += ofVec3f(mouseDelta.x, -mouseDelta.y, 0.f) * 10.f;
-    }
 }
