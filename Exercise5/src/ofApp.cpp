@@ -5,27 +5,38 @@ void ofApp::setup()
     ofSetVerticalSync(true);
     ofSetFrameRate(144);
 
+    setupCamera();
+    setupGui();
+
+    spawnTokens(1000ULL);
+    initializeCircle();
+}
+
+void ofApp::setupCamera()
+{
     camera.setTarget({0, 0, 0});
     camera.setDistance(cameraDistance);
     camera.disableMouseInput();
-
-    setupGui();
-
-    initializeCircle();
 }
 
 void ofApp::setupGui()
 {
     gui.setup();
     gui.add(fpsLabel.setup("FPS", "0"));
+    gui.add(scoreLabel.setup("Score", "0"));
     gui.add(integrationMethodToggle.setup("Verlet/Euler", false));
     gui.add(deltaTimeSlider.setup("Delta Time", 1e-2f, 1e-4f, 1e-2f));
     gui.add(dampingSlider.setup("Damping", 20.f, 0.f, 30.f));
     gui.add(elasticitySlider.setup("Elasticity", 500.f, 100.f, 5000.f));
-    gui.add(pressureSlider.setup("Pressure", 1e4f, 1e2f, 1e5f));
-    gui.add(debugLabel.setup("Debug", "0"));
+    gui.add(pressureSlider.setup("Pressure", 1e3f, 1e2f, 1e5f));
 
     integrationMethodToggle.addListener(this, &ofApp::onIntegrationMethodChange);
+}
+
+void ofApp::spawnTokens(size_t count)
+{
+    for (size_t i = 0; i < count; ++i)
+        tokenPositions.emplace_back(ofRandom(-500.f, 500.f), ofRandom(-500.f, 500.f), ofRandom(-500.f, 500.f));
 }
 
 void ofApp::initializeCircle()
@@ -75,6 +86,17 @@ void ofApp::update()
     camera.setTarget(softBodyCenter);
     camera.setPosition(softBodyCenter + ofVec3f(0.f, 0.f, cameraDistance));
 
+    std::vector<size_t> indicesToRemove;
+    for (size_t i = 0; i < tokenPositions.size(); ++i)
+        if (ofVec2f(tokenPositions[i].x, tokenPositions[i].y).distance(ofVec2f(softBodyCenter.x, softBodyCenter.y)) < 50.f)
+        {
+            ++score;
+            scoreLabel = ofToString(score);
+            indicesToRemove.push_back(i);
+        }
+    for (auto it = indicesToRemove.rbegin(); it != indicesToRemove.rend(); ++it)
+        tokenPositions.erase(tokenPositions.begin() + *it);
+
     fpsLabel = ofToString(ofGetFrameRate());
 }
 
@@ -87,6 +109,16 @@ void ofApp::draw()
 
     softBody.draw();
     ofDrawGrid(100.f, 5, false, false, false, true);
+    for (auto &tokenPosition : tokenPositions)
+    {
+        ofSetColor(ofRandom(255), ofRandom(255), ofRandom(255));
+        ofDrawSphere(tokenPosition, 5.f);
+    }
+    if (isMousePressed && draggedPoint == nullptr)
+    {
+        ofSetColor(ofColor::limeGreen);
+        ofDrawLine(worldMousePosition, camera.screenToWorld({mouseX, mouseY, screenToWorldScale}));
+    }
 
     ofDisableDepthTest();
     camera.end();
@@ -117,6 +149,7 @@ void ofApp::mousePressed(int x, int y, int button)
 {
     isMousePressed = true;
     mouseDelta = ofVec3f(x, y, 0.f);
+    worldMousePosition = camera.screenToWorld({x, y, screenToWorldScale});
 
     for (auto &point : softBody.points)
         if (point.position.distance(camera.screenToWorld({x, y, screenToWorldScale})) < clickAndDragRange)
@@ -132,5 +165,5 @@ void ofApp::mouseReleased(int x, int y, int button)
         draggedPoint = nullptr;
     else
         for (auto &point : softBody.points)
-            point.force += ofVec3f(mouseDelta.x, -mouseDelta.y, 0.f) * 10.f;
+            point.force += ofVec3f(mouseDelta.x, -mouseDelta.y, 0.f) * 50.f;
 }
