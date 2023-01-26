@@ -80,8 +80,8 @@ void Spring::applyRestoringForce()
 
 void Spring::applyPressure(float volume)
 {
-    ofVec3f normal = direction.getNormalized().getPerpendicular({0.f, 0.f, 1.f});
-    ofVec3f pressureForce = distance * pressure * (1.f / volume) * normal * 0.5f;
+    normalVector = direction.getNormalized().getPerpendicular({0.f, 0.f, 1.f});
+    ofVec3f pressureForce = distance * pressure * (1.f / volume) * normalVector * 0.5f;
 
     links.first->force += pressureForce;
     links.second->force += pressureForce;
@@ -129,7 +129,7 @@ float SoftBody::getVolume()
     float volume = 1.f;
 
     for (auto &spring : springs)
-        volume += spring.distance * spring.distance;
+        volume += 0.5f * fabs(spring.direction.x) * fabs(spring.normalVector.x) * spring.distance;
 
     return volume;
 }
@@ -141,5 +141,6 @@ ofVec3f SoftBody::getAveragePosition()
     for (auto &point : points)
         averagePosition += point.position;
 
+    assert(points.size() != 0);
     return averagePosition / points.size();
 }

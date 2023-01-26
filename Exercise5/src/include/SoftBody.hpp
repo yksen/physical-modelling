@@ -45,6 +45,7 @@ public:
     ofVec3f direction;
     float distance;
     float length{10.f};
+    ofVec3f normalVector;
 };
 
 class SoftBody
