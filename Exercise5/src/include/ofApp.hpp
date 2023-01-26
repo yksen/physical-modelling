@@ -20,12 +20,13 @@ public:
 
 	ofEasyCam camera;
 	float cameraDistance{200.f};
+	float screenToWorldScale{0.908378f};
 
 	SoftBody softBody;
-	std::vector<ofVec3f> points;
-
 	ofVec2f mouseDelta;
-	
+	float clickAndDragRange{2.f};
+	Point *draggedPoint;
+
 	bool isMousePressed{false};
 	bool enableGui{true};
 	bool floorCollisionEnabled{true};

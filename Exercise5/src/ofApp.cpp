@@ -60,6 +60,12 @@ void ofApp::update()
     Spring::pressure = pressureSlider;
     Spring::pressureEnabled = pressureEnabled;
 
+    if (draggedPoint != nullptr)
+    {
+        auto mousePosition = camera.screenToWorld({mouseX, mouseY, screenToWorldScale});
+        draggedPoint->position = {mousePosition.x, mousePosition.y, 0.f};
+    }
+
     softBody.update(deltaTimeSlider);
     if (floorCollisionEnabled)
         softBody.collideWithFloor();
@@ -77,7 +83,7 @@ void ofApp::draw()
 
     camera.begin();
     ofEnableDepthTest();
-    
+
     softBody.draw();
     ofDrawGrid(100.f, 100, false, false, false, true);
 
@@ -110,6 +116,13 @@ void ofApp::mousePressed(int x, int y, int button)
 {
     isMousePressed = true;
     mouseDelta = ofVec3f(x, y, 0.f);
+
+    for (auto &point : softBody.points)
+        if (point.position.distance(camera.screenToWorld({x, y, screenToWorldScale})) < clickAndDragRange)
+        {
+            draggedPoint = &point;
+            draggedPoint->isFixed = true;
+        }
 }
 
 void ofApp::mouseReleased(int x, int y, int button)
@@ -117,6 +130,14 @@ void ofApp::mouseReleased(int x, int y, int button)
     isMousePressed = false;
     mouseDelta -= ofVec3f(x, y, 0.f);
 
-    for (auto &point : softBody.points)
-        point.force += ofVec3f(mouseDelta.x, -mouseDelta.y, 0.f) * 10.f;
+    if (draggedPoint != nullptr)
+    {
+        draggedPoint->isFixed = false;
+        draggedPoint = nullptr;
+    }
+    else
+    {
+        for (auto &point : softBody.points)
+            point.force += ofVec3f(mouseDelta.x, -mouseDelta.y, 0.f) * 10.f;
+    }
 }
